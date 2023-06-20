@@ -1,6 +1,14 @@
 import express from 'express';
 export const routes = express.Router();
 
+//GetAllOrder
+//GetById
+//GetByCustomerId
+//PostCreateWithProduct
+//PutUpdate - Insert new item
+//PutUpdate - Insert remove
+//Delete Order
+
 routes.get('/', (req, res, next) => {
   return res.status(200).json({
     status: 'GET Orders /',

@@ -7,7 +7,6 @@ This repository contains a Node.js TypeScript project that implements a self-ser
 To run this project, ensure that you have the following installed:
 
 - [Node.js](https://nodejs.org) (v18.16.0)
-- [Yarn](https://yarnpkg.com) (package manager)
 
 ## Installation
 
@@ -16,7 +15,7 @@ To run this project, ensure that you have the following installed:
 3. Run the following command to install the project dependencies:
 
    ```shell
-   yarn install
+   npm install
    ```
 
 ## Usage
@@ -24,7 +23,7 @@ To run this project, ensure that you have the following installed:
 To start the development server, run the following command:
 
 ```shell
-yarn dev
+npm run dev
 ```
 
 This will compile the TypeScript code, start the server, and watch for any file changes, automatically restarting the server when necessary.
@@ -34,7 +33,7 @@ This will compile the TypeScript code, start the server, and watch for any file 
 To run the tests, execute the following command:
 
 ```shell
-yarn test
+npm run test
 ```
 
 The tests are implemented using a testing framework and provide comprehensive coverage for the API.

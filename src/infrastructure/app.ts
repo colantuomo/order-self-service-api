@@ -1,6 +1,6 @@
 import express from 'express';
 import helmet from 'helmet';
-import { routes } from './web/controllers';
+import { routes } from '../adapters/index.routes';
 
 const app = express();
 app.use(helmet());
