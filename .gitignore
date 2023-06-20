@@ -17,3 +17,4 @@ tags
 # build
 build/
 dist/
+*.env
