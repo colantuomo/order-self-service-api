@@ -1,23 +1,20 @@
 # Use an official Node.js runtime as the base image
-FROM node:18-alpine
+FROM node:18.16.0-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and yarn.lock to the working directory
-COPY package.json yarn.lock ./
+# Copy package.json and package-lock.json to the working directory
+COPY package.json ./
 
-# Install dependencies using Yarn
-RUN yarn install
+# Install dependencies using npm
+RUN npm install --production
 
 # Copy the rest of the application code to the working directory
 COPY . .
 
 # Build the application
-RUN yarn build
-
-# Set the PORT environment variable
-ENV PORT=8080
+RUN npm run build
 
 # Specify the command to run your application
-CMD [ "node", "dist/server.js" ]
+CMD [ "npm", "start" ]
