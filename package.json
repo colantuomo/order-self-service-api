@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/infrastructure/server.ts",
     "build": "npx tsup src",
     "test": "vitest --run --coverage --passWithNoTests",
     "test:watch": "vitest --watch",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "docker:dev": "docker compose -f docker-compose-dev.yml up -d"
   },
   "keywords": [],
   "author": "",

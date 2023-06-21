@@ -15,7 +15,7 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.development
     restart: always
     ports:
       - "${PORT}:${PORT}"
@@ -27,7 +27,9 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_NAME: ${POSTGRES_DB}
       PORT: ${PORT}
-
+    volumes:
+      - ./:/app/
+      - ignore:/app/node_modules/
 volumes:
-  # mysql_data:
   postgres_data:
+  ignore:

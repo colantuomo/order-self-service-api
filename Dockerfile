@@ -8,10 +8,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install dependencies using npm
-RUN npm install
+RUN npm install --production
 
 # Copy the rest of the application code to the working directory
 COPY . .
 
+# Build the application
+RUN npm run build
+
 # Specify the command to run your application
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "start" ]
