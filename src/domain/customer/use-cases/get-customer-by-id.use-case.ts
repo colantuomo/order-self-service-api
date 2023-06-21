@@ -1,11 +1,9 @@
 import { CustomerRepository } from "../../../infrastructure/adapters/customer/repository/customer.repository";
-import { Customer } from "../entity/customer";
 
-export class DeleteCustomerUseCase {
+export class GetCustomerByIdUseCase {
     constructor(){}
 
     handler(customerRepository: CustomerRepository, id: string){
-        const customer: Customer = customerRepository.getById(id);
-        return customerRepository.delete(customer);
+        return customerRepository.getById(id);
     }
 }
