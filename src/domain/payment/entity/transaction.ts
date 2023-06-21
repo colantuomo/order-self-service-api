@@ -1,5 +1,5 @@
 import { uuid } from "uuidv4";
-import { Order } from "../order/order";
+import { Order } from "../order/Order";
 import { ETransactionStatus } from "./transaction-status.enum";
 
 export class Transaction{

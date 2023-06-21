@@ -4,11 +4,8 @@ export const routes = express.Router();
 
 const productRepository = new ProductRepository()
 //Get
-//GetById
-//GetByProductCategory
-//PostCreate
+//GetByOrderId
 //PutUpdate
-//Delete
 
 routes.get('/', (request, response, next)=>{
     return response.status(200).json(productRepository.get())

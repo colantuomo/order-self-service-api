@@ -1,4 +1,5 @@
-import { Product } from "../product/product";
+import { Product } from "../../product/entity/product";
+
 
 export class OrderItem {
     private _product: Product;

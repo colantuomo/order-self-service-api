@@ -1,12 +1,13 @@
 import express from 'express';
 export const routes = express.Router();
 
-//GetAllOrder
 //GetById
+//GetAllOrder
 //GetByCustomerId
 //PostCreateWithProduct
 //PutUpdate - Insert new item
 //PutUpdate - Insert remove
+//PutUpdate - Select Payment
 //Delete Order
 
 routes.get('/', (req, res, next) => {

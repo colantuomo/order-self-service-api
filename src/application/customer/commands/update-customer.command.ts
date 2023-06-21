@@ -1,1 +1,4 @@
-export interface UpdateCustomerCommand {}
+export interface UpdateCustomerCommand {
+    name: string,
+    cgc: string
+}
