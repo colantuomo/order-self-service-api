@@ -5,7 +5,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "secretpassword"
+      POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -33,6 +33,7 @@ services:
     restart: always
     ports:
       - "8080:8080"
+      # - ${PORT}:${PORT}
     depends_on:
       - database
     volumes:

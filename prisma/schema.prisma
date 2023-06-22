@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Order {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(uuid())
   createdAt  DateTime  @default(now())
   customer   Customer  @relation(fields: [customerId], references: [id])
-  customerId Int
+  customerId String
   products   Product[] @relation("OrderProduct")
   payment    Payment?
 
@@ -20,7 +20,7 @@ model Order {
 }
 
 model Customer {
-  id     Int     @id @default(autoincrement())
+  id     String  @id @default(uuid())
   name   String
   email  String  @unique
   orders Order[]
@@ -29,17 +29,17 @@ model Customer {
 }
 
 model Payment {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(uuid())
   amount  Float
   status  String
   order   Order  @relation(fields: [orderId], references: [id])
-  orderId Int    @unique
+  orderId String @unique
 
   @@map("payments")
 }
 
 model Product {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(uuid())
   name        String
   description String?
   price       Float
