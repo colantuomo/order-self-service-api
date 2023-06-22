@@ -2,14 +2,12 @@ version: "3"
 services:
   database:
     image: postgres:15.3
-    user: postgres
     restart: always
     environment:
-      # POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "secretpassword"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./library/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
 
@@ -25,7 +23,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       - pgadmin-data:/var/lib/pgadmin
-    restart: unless-stopped    
+    restart: unless-stopped
 
   app:
     stdin_open: true
@@ -37,16 +35,10 @@ services:
       - "8080:8080"
     depends_on:
       - database
-    # environment:
-    #   DB_HOST: db
-    #   DB_USER: ${POSTGRES_USER}
-    #   DB_PASSWORD: ${POSTGRES_PASSWORD}
-    #   DB_NAME: ${POSTGRES_DB}
-    #   PORT: ${PORT}
     volumes:
       - ./:/app/
-      - ignore:/app/node_modules/
+      - node-modules:/app/node_modules/
 volumes:
   postgres_data:
   pgadmin-data:
-  ignore:
+  node-modules:

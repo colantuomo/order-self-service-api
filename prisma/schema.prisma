@@ -8,8 +8,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(255)
-  cpf  String @unique @db.VarChar(11)
+model Order {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  customerId Int
+  products   Product[] @relation("OrderProduct")
+  payment    Payment?
+
+  @@map("orders")
+}
+
+model Customer {
+  id     Int     @id @default(autoincrement())
+  name   String
+  email  String  @unique
+  orders Order[]
+
+  @@map("customers")
+}
+
+model Payment {
+  id      Int    @id @default(autoincrement())
+  amount  Float
+  status  String
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId Int    @unique
+
+  @@map("payments")
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  orders      Order[] @relation("OrderProduct")
+
+  @@map("products")
 }
