@@ -10,7 +10,8 @@
     "test": "vitest --run --coverage --passWithNoTests",
     "test:watch": "vitest --watch",
     "lint": "eslint . --ext .ts",
-    "docker:dev": "docker compose -f docker-compose-dev.yml up -d"
+    "docker:dev": "docker compose -f docker-compose-dev.yml up -d",
+    "prisma:migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
