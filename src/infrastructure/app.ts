@@ -2,12 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import { routes } from '../adapters/index.routes';
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
-
-// const user = new User();
-
-// prisma.users.create({ data: { name: 'Denis', cpf: '12321351' } });
 
 const app = express();
 app.use(helmet());
