@@ -6,12 +6,17 @@ import { CustomerRepository } from '../repository/customer.repository';
 import { UpdateCustomerUseCase } from '../../../../domain/customer/use-cases/update-customer.use-case';
 import { DeleteCustomerUseCase } from '../../../../domain/customer/use-cases/delete-customer.use-case';
 import { GetCustomerByIdUseCase } from '../../../../domain/customer/use-cases/get-customer-by-id.use-case';
+import { Customer } from '../../../../domain/customer/entity/customer';
+import { GetCustomerUseCase } from '../../../../domain/customer/use-cases/get-customer.use-case';
+import { GetCustomerByCPFUseCase } from '../../../../domain/customer/use-cases/get-customer-by-cpf.use-case';
 export const routes = express.Router();
 
 const createCustomerUserCase = new CreateCustomerUseCase()
 const updateCustomerUserCase = new UpdateCustomerUseCase()
 const deleteCustomerUserCase = new DeleteCustomerUseCase()
+const getCustomerByCPFUseCase = new GetCustomerByCPFUseCase()
 const getCustomerByIdUseCase = new GetCustomerByIdUseCase()
+const getCustomerUseCase = new GetCustomerUseCase()
 const customerRepository = new CustomerRepository()
 //Get
 //GetById
@@ -20,15 +25,19 @@ const customerRepository = new CustomerRepository()
 //PutUpdate
 //Delete
 routes.get('/', (request, response, next)=>{
-    return 
+    return response.status(200).json(getCustomerUseCase.handler(customerRepository))
 })
 
 routes.get('/:id', (request, response, next)=>{
-    
+    const id: string = request.params.id
+    const customer: Customer = getCustomerByIdUseCase.handler(customerRepository, id)
+    return response.status(200).json(customer)
 })
 
 routes.get('/:cpf/cpf', (request, response, next)=>{
-    
+    const cpf: string = request.params.cpf
+    const arrCustomer: Array<Customer> = getCustomerByCPFUseCase.handler(customerRepository, cpf)
+    return response.status(200).json(arrCustomer)
 })
 
 routes.post('/', (request, response, next)=>{
@@ -49,3 +58,5 @@ routes.delete('/:id', (request, response, next)=>{
     deleteCustomerUserCase.handler(customerRepository, id)
     return response.status(204)
 })
+
+export const customerRoutes = routes

@@ -4,7 +4,8 @@ export class CustomerRepository {
     private lsCustomer: Array<Customer> = []
 
     new(newCustomer: Customer){
-        return this.lsCustomer.push(newCustomer);
+        this.lsCustomer.push(newCustomer);
+        return newCustomer
     }
 
     update(updatedCustomer: Customer){

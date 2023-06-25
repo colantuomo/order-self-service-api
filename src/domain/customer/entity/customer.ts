@@ -1,4 +1,4 @@
-import { uuid } from "uuidv4";
+import { v4 } from "uuid";
 
 export class Customer{
     private _id: string;
@@ -6,7 +6,7 @@ export class Customer{
     private _cgc: string;
     
     constructor(name: string, cgc: string){
-        this._id = uuid()
+        this._id = v4()
         this._name = name;
         this._cgc = cgc
     }    
