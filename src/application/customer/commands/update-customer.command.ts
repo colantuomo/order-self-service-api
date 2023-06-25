@@ -1,4 +1,5 @@
 export interface UpdateCustomerCommand {
     name: string,
-    cgc: string
+    cpf: string,
+    email: string
 }

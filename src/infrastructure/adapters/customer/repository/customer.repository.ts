@@ -1,35 +1,61 @@
+import { Prisma, PrismaClient } from "@prisma/client";
 import { Customer } from "../../../../domain/customer/entity/customer";
 
+const prisma = new PrismaClient();
 export class CustomerRepository {
-    private lsCustomer: Array<Customer> = []
-
-    new(newCustomer: Customer){
-        this.lsCustomer.push(newCustomer);
-        return newCustomer
+    async new(newCustomer: Customer){
+        let dbCustomer: Prisma.CustomerCreateInput = {
+            id: newCustomer.id,
+            name: newCustomer.name,
+            email: newCustomer.email,
+            cpf: newCustomer.cpf
+        }
+        const customer = await prisma.customer.create({ data: dbCustomer })
+        return customer
     }
 
-    update(updatedCustomer: Customer){
-        return updatedCustomer;
+    async update(updatedCustomer: Customer){
+        return await prisma.customer.update({
+            where: {
+                id: updatedCustomer.id
+            },
+            data: {
+                name: updatedCustomer.name,
+                email: updatedCustomer.email,
+                cpf: updatedCustomer.cpf
+            }
+        });
     }
 
-    get(){
-        return this.lsCustomer;
+    async get(){
+        return await prisma.customer.findMany();
     }
 
-    getById(id: string){
-        return this.lsCustomer.filter( x=> x.id === id)[0];
+    async getById(id: string){
+        return await prisma.customer.findFirst({
+            where: {
+                id: id
+            }
+        });
     }
 
-    getByCPF(cpf: string){
-        return this.lsCustomer.filter( x=> x.cgc === cpf);
+    async getByCPF(cpf: string){
+        return await prisma.customer.findMany({
+            where: {
+                cpf: cpf
+            }
+        });
     }
 
     /**
      * 
      * @param customer 
      */
-    delete(customer: Customer){
-        const indCustomer = this.lsCustomer.findIndex((x: Customer)=> x.id === customer.id)
-        this.lsCustomer.splice(indCustomer, 1)
+    async delete(customer: Customer){
+        await prisma.customer.delete({
+            where: {
+                id: customer.id
+            }
+        })
     }
 }

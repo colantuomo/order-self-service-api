@@ -28,15 +28,15 @@ routes.get('/', (request, response, next)=>{
     return response.status(200).json(getCustomerUseCase.handler(customerRepository))
 })
 
-routes.get('/:id', (request, response, next)=>{
+routes.get('/:id', async (request, response, next)=>{
     const id: string = request.params.id
-    const customer: Customer = getCustomerByIdUseCase.handler(customerRepository, id)
+    const customer: Customer = await getCustomerByIdUseCase.handler(customerRepository, id)
     return response.status(200).json(customer)
 })
 
-routes.get('/:cpf/cpf', (request, response, next)=>{
+routes.get('/:cpf/cpf', async (request, response, next)=>{
     const cpf: string = request.params.cpf
-    const arrCustomer: Array<Customer> = getCustomerByCPFUseCase.handler(customerRepository, cpf)
+    const arrCustomer: Array<Customer> = await getCustomerByCPFUseCase.handler(customerRepository, cpf)
     return response.status(200).json(arrCustomer)
 })
 

@@ -6,7 +6,7 @@ export class CreateCustomerUseCase{
     constructor(){}
 
     handler(customerRepository: CustomerRepository, command: CreateCustomerCommand){
-        const newCustomer: Customer = new Customer(command.name, command.cgc)
+        const newCustomer: Customer = new Customer(command.name, command.cpf, command.email)
         const createdCustomer = customerRepository.new(newCustomer)
 
         return createdCustomer

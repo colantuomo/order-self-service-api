@@ -1,4 +1,5 @@
 export interface CreateCustomerCommand {
     name: string,
-    cgc: string
+    cpf: string,
+    email: string
 }

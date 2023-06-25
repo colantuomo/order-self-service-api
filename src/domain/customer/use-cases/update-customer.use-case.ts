@@ -8,7 +8,8 @@ export class UpdateCustomerUseCase {
     handler(customerRepository: CustomerRepository, id: string, body: UpdateCustomerCommand){
         const customer: Customer = customerRepository.getById(id);
         customer.name = body.name
-        customer.cgc = body.cgc
+        customer.cpf = body.cpf
+        customer.email = body.email
         
         return customerRepository.update(customer)
     } 
