@@ -1,4 +1,5 @@
-import { Product } from "../../../domain/product/product";
+import { Product } from "../../../../domain/product/entity/product"
+
 
 export class ProductRepository {
     private lsProduct: Array<Product> = []

@@ -23,6 +23,7 @@ model Customer {
   id     String  @id @default(uuid())
   name   String
   email  String  @unique
+  cpf    String  @unique
   orders Order[]
 
   @@map("customers")
