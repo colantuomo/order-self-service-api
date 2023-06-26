@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   database:
     image: postgres:15.3
@@ -10,7 +10,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - '5432:5432'
 
   app:
     build:
@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     depends_on:
       - database
     environment:

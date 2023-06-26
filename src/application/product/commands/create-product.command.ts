@@ -1,1 +1,5 @@
-export interface CreateProductCommand {}
+export interface CreateProductCommand {
+  name: string;
+  price: number;
+  description?: string;
+}
