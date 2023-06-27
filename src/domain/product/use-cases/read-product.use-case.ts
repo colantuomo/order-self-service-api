@@ -1,13 +1,13 @@
-import { UpdateProductCommand } from '../../../application/product/commands';
+import { ReadProductsCommand } from '../../../application/product/commands';
 import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
 
-export class UpdateProductUseCase {
+export class ReadProductsUseCase {
   private _repository: ProductRepository;
 
   constructor(repository: ProductRepository) {
     this._repository = repository;
   }
-  handler({ id, product }: UpdateProductCommand) {
-    return this._repository.update(id, product);
+  handler({}: ReadProductsCommand) {
+    return this._repository.read();
   }
 }

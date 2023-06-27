@@ -1,1 +1,3 @@
-export interface DeleteProductCommand {}
+export interface DeleteProductCommand {
+  id: string;
+}

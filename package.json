@@ -6,11 +6,11 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "tsx watch src/infrastructure/server.ts",
-    "build": "tsup src",
+    "build": "npx tsup src",
     "test": "vitest --run --coverage --passWithNoTests",
     "test:watch": "vitest --watch",
     "lint": "eslint . --ext .ts",
-    "docker:dev:run": "docker compose -f docker-compose-dev.yml build && docker compose -f docker-compose-dev.yml up -d",
+    "docker:dev:run": "docker compose -f docker-compose-dev.yml build --no-cache; docker compose -f docker-compose-dev.yml up -d",
     "docker:dev:down": "docker compose -f docker-compose-dev.yml down",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:migrate:apply": "npx prisma migrate deploy"
@@ -40,5 +40,9 @@
   },
   "engines": {
     "node": "18.16.0"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true
   }
 }

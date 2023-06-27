@@ -42,8 +42,8 @@ model Payment {
 model Product {
   id          String  @id @default(uuid())
   name        String
-  description String?
   price       Float
+  description String?
   orders      Order[] @relation("OrderProduct")
 
   @@map("products")
