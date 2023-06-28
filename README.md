@@ -22,7 +22,7 @@ This repository contains a Node.js TypeScript project that implements a self-ser
 * [DDD](#table-of-contents)
    * [Glossary](/docs/glossary.md)
    * [Domain Storytelling](#domain-storytelling)
-   * [Event Storming](#domain-storytelling)
+   * [Event Storming](#event-storming)
 
 ---
 
