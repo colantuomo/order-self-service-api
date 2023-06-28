@@ -4,20 +4,20 @@ This repository contains a Node.js TypeScript project that implements a self-ser
 
 ---
 
-## Table of contents
+## Summary
 
-* [Usage documentation](#table-of-contents)
-   * [Usage with Docker](#table-of-contents)
+* [Usage documentation](#summary)
+   * [Usage with Docker](#summary)
       * [Prerequisites](#docker-prerequisites)
       * [Installation](#docker-installation)
       * [Usage](#docker-usage)
-   * [Usage with Node.JS](#table-of-contents)
+   * [Usage with Node.JS](#summary)
       * [Prerequisites](#node-prerequisites)
       * [Installation](#node-installation)
       * [Usage](#node-usage)
    * [Folder Structure](#folder-structure)
    * [Postman Collection](postman/Self%20Service%20Order%20-%20API.postman_collection.json)
-* [DDD](#table-of-contents)
+* [DDD](#summary)
    * [Glossary](/docs/glossary.md)
    * [Domain Storytelling](#domain-storytelling)
    * [Event Storming](#event-storming)
@@ -38,16 +38,11 @@ To run this project, ensure that you have the following installed:
 
 ---
 
-
 ## Docker Usage
 
 (...) #Completar
 
----
-
-## Docker Testing
-
-(...) #Completar
+([Back to Summary](#summary) :arrow_up:)
 
 ---
 
@@ -81,17 +76,7 @@ npm run dev
 
 This will compile the TypeScript code, start the server, and watch for any file changes, automatically restarting the server when necessary.
 
----
-
-## Node Testing
-
-To run the tests, execute the following command:
-
-```shell
-npm run test
-```
-
-The tests are implemented using a testing framework and provide comprehensive coverage for the API.
+([Back to Summary](#summary) :arrow_up:)
 
 ---
 
@@ -104,6 +89,8 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
   - `application`: Implements the application layer, which orchestrates the domain logic and exposes it through use cases.
   - `infrastructure`: Provides infrastructure-related implementations, such as database connectors or external service clients.
   - `web`: Handles API-specific concerns such as route definitions and request validation.
+
+([Back to Summary](#summary) :arrow_up:)
 
 ---
 
@@ -118,6 +105,8 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 ### Preparation And Delivery
 ![domain_storytelling_2](docs/assets/2_domain_storytelling_preparation_and_delivery.png "Preparation And Delivery")
 
+([Back to Summary](#summary) :arrow_up:)
+
 ---
 
 ## Event Storming
@@ -125,3 +114,5 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 ![event_storming_1](docs/assets/event_storming_1.jpg "event_storming_1")
 
 ![event_storming_2](docs/assets/event_storming_2.jpg "event_storming_2")
+
+([Back to Summary](#summary) :arrow_up:)
