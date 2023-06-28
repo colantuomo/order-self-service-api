@@ -4,20 +4,20 @@ This repository contains a Node.js TypeScript project that implements a self-ser
 
 ---
 
-## Summary
+## Table of contents
 
-* [Usage documentation](#summary)
-   * [Usage with Docker](#summary)
+* [Usage documentation](#table-of-contents)
+   * [Usage with Docker](#table-of-contents)
       * [Prerequisites](#docker-prerequisites)
       * [Installation](#docker-installation)
       * [Usage](#docker-usage)
-   * [Usage with Node.JS](#summary)
+   * [Usage with Node.JS](#table-of-contents)
       * [Prerequisites](#node-prerequisites)
       * [Installation](#node-installation)
       * [Usage](#node-usage)
    * [Folder Structure](#folder-structure)
    * [Postman Collection](postman/Self%20Service%20Order%20-%20API.postman_collection.json)
-* [DDD](#summary)
+* [DDD](#table-of-contents)
    * [Glossary](/docs/glossary.md)
    * [Domain Storytelling](#domain-storytelling)
    * [Event Storming](#event-storming)
@@ -42,7 +42,7 @@ To run this project, ensure that you have the following installed:
 
 (...) #Completar
 
-([Back to Summary](#summary) :arrow_up:)
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
@@ -76,7 +76,7 @@ npm run dev
 
 This will compile the TypeScript code, start the server, and watch for any file changes, automatically restarting the server when necessary.
 
-([Back to Summary](#summary) :arrow_up:)
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
@@ -90,7 +90,7 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
   - `infrastructure`: Provides infrastructure-related implementations, such as database connectors or external service clients.
   - `web`: Handles API-specific concerns such as route definitions and request validation.
 
-([Back to Summary](#summary) :arrow_up:)
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
@@ -105,7 +105,7 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 ### Preparation And Delivery
 ![domain_storytelling_2](docs/assets/2_domain_storytelling_preparation_and_delivery.png "Preparation And Delivery")
 
-([Back to Summary](#summary) :arrow_up:)
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
@@ -115,4 +115,4 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 
 ![event_storming_2](docs/assets/event_storming_2.jpg "event_storming_2")
 
-([Back to Summary](#summary) :arrow_up:)
+([Back to Table of contents](#table-of-contents) :arrow_up:)
