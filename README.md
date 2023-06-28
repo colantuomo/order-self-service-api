@@ -34,7 +34,7 @@ To run this project, ensure that you have the following installed:
 
 ---
 
-### Docker Installation
+## Docker Installation
 
 (...) #Completar
 
@@ -53,7 +53,7 @@ To run this project, ensure that you have the following installed:
 
 ---
 
-### Node Prerequisites
+## Node Prerequisites
 
 To run this project, ensure that you have the following installed:
 
@@ -61,7 +61,7 @@ To run this project, ensure that you have the following installed:
 
 ---
 
-### Node Installation
+## Node Installation
 
 1. Clone this repository to your local machine or download the source code.
 2. Open a terminal and navigate to the project's root directory.
@@ -119,3 +119,11 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 
 ### Preparation And Delivery
 ![domain_storytelling_2](docs/assets/2_domain_storytelling_preparation_and_delivery.png "Preparation And Delivery")
+
+---
+
+## Event Storming
+
+![event_storming_1](docs/assets/event_storming_1.jpg "event_storming_1")
+
+![event_storming_2](docs/assets/event_storming_2.jpg "event_storming_2")
