@@ -16,7 +16,7 @@
 
 ---
 
-This repository contains a Node.js TypeScript project that implements a self-service order API using the Domain-Driven Design (DDD) architecture. The API allows users to place and manage their own orders through a convenient interface.
+This repository contains a Node.js TypeScript project that implements a self-service order API using the Domain-Driven Design (DDD) and Hexagonal architecture. The API allows users to place and manage their own orders through a convenient interface.
 
 ---
 
@@ -31,12 +31,17 @@ This repository contains a Node.js TypeScript project that implements a self-ser
       * [Prerequisites](#node-prerequisites)
       * [Installation](#node-installation)
       * [Usage](#node-usage)
+   * [Postman](#postman)
+* [Architecture documentation](#table-of-contents)
+   * [Hexagonal Structure](#hexagonal-structure)
    * [Folder Structure](#folder-structure)
-   * [Postman Collection](postman/Self%20Service%20Order%20-%20API.postman_collection.json)
 * [DDD](#table-of-contents)
    * [Glossary](/docs/glossary.md)
    * [Domain Storytelling](#domain-storytelling)
    * [Event Storming](#event-storming)
+* [External Links](#external-links)
+* [Contributors](#contributors)
+
 
 ---
 
@@ -46,17 +51,21 @@ To run this project, ensure that you have the following installed:
 
 - [Docker](https://www.docker.com/)
 
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
 ---
 
 ## Docker Installation
 
-(...) #Completar
+(WIP)
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
 ## Docker Usage
 
-(...) #Completar
+(WIP)
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -67,6 +76,8 @@ To run this project, ensure that you have the following installed:
 To run this project, ensure that you have the following installed:
 
 - [Node.JS](https://nodejs.org) (v18.16.0)
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
@@ -79,6 +90,7 @@ To run this project, ensure that you have the following installed:
    ```shell
    npm install
    ```
+([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
 
@@ -91,6 +103,24 @@ npm run dev
 ```
 
 This will compile the TypeScript code, start the server, and watch for any file changes, automatically restarting the server when necessary.
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
+## Postman
+
+* [Online Collection](https://documenter.getpostman.com/view/10486183/2s93z9ciBN)
+
+* [Collection Download](postman/Self%20Service%20Order%20-%20API.postman_collection.json)
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
+## Hexagonal Structure
+
+(WIP)
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -116,6 +146,8 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 
 ![domain_storytelling_1](docs/assets/1_domain_storytelling_order_and_payment.png "Order and Payment")
 
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
 ---
 
 ### Preparation And Delivery
@@ -130,5 +162,23 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 ![event_storming_1](docs/assets/event_storming_1.jpg "event_storming_1")
 
 ![event_storming_2](docs/assets/event_storming_2.jpg "event_storming_2")
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
+## External Links
+
+* [Miro](https://miro.com/app/board/uXjVMGbRVvY=/)
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
+## Contributors
+
+* Denis Wesley Slapelis - rm348515
+* Paulo César Colantuomo Martins - rm349043
+* Willian Yoshiaki Kazahaya - rm348581
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
