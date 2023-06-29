@@ -8,7 +8,7 @@ export class CustomerRepository {
             id: newCustomer.id,
             name: newCustomer.name,
             email: newCustomer.email,
-            cpf: newCustomer.cpf
+            cpf: newCustomer.cpf.value
         }
         const customer = await prisma.customer.create({ data: dbCustomer })
         return customer
@@ -22,7 +22,7 @@ export class CustomerRepository {
             data: {
                 name: updatedCustomer.name,
                 email: updatedCustomer.email,
-                cpf: updatedCustomer.cpf
+                cpf: updatedCustomer.cpf.value
             }
         });
     }

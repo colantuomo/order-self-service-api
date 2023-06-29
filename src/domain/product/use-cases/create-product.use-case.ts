@@ -1,15 +1,10 @@
 import { CreateProductCommand } from '../../../application/product/commands';
-import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
+import { UseCase } from '../../base/UseCase';
 import { Product } from '../entity/product';
 
-export class CreateProductUseCase {
-  private _repository: ProductRepository;
-
-  constructor(repository: ProductRepository) {
-    this._repository = repository;
-  }
+export class CreateProductUseCase extends UseCase<Product | Product[]> {
   handler({ name, price }: CreateProductCommand) {
-    const product = new Product(name, price);
-    return this._repository.create(product);
+    const product = new Product('', name, price);
+    return this.repository.create(product);
   }
 }

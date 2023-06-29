@@ -1,13 +1,9 @@
 import { ReadProductByIdCommand } from '../../../application/product/commands';
-import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
+import { UseCase } from '../../base/UseCase';
+import { Product } from '../entity/product';
 
-export class ReadProductByIdUseCase {
-  private _repository: ProductRepository;
-
-  constructor(repository: ProductRepository) {
-    this._repository = repository;
-  }
+export class ReadProductByIdUseCase extends UseCase<Product | Product[]> {
   handler({ id }: ReadProductByIdCommand) {
-    return this._repository.readById(id);
+    return this.repository.readById(id);
   }
 }
