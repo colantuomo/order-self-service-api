@@ -1,30 +1,38 @@
 import { prismaClient } from '../../../database/prisma';
 import { Product } from '../../../../domain/product/entity/product';
-import { IRepository } from '../../../types/repository';
+import { IRepository } from '../../../../domain/base/interfaces/IRepository';
+import { ProductResponse } from '../../../../application/product/product.reponse';
+import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 
-export class ProductRepository implements IRepository<Product> {
+export class ProductRepository implements IRepository<Product | Product[]> {
   async create({ name, price, description }: Product) {
-    const product = await prismaClient.product.create({
+    const promise = prismaClient.product.create({
       data: {
         name,
         price,
         description,
       },
     });
-    return product as any as Product;
+    const product = await handleRepositoryError(promise)
+    const { data } = new ProductResponse(product);
+    return { data };
   }
   async read() {
-    const product = await prismaClient.product.findMany();
-    return product as any as Product;
+    const promise = prismaClient.product.findMany();
+    const product = await handleRepositoryError(promise)
+    const { data } = new ProductResponse(product);
+    return { data };
   }
   async readById(id: string) {
-    const product = await prismaClient.product.findFirst({
+    const promise = prismaClient.product.findUniqueOrThrow({
       where: { id },
     });
-    return product as any as Product;
+    const product = await handleRepositoryError(promise)
+    const { data } = new ProductResponse(product);
+    return { data };
   }
   async update(id: string, { name, price, description }: Product) {
-    const product = await prismaClient.product.update({
+    const promise = prismaClient.product.update({
       where: { id },
       data: {
         name,
@@ -32,12 +40,15 @@ export class ProductRepository implements IRepository<Product> {
         description,
       },
     });
-    return product as any as Product;
+    const product = await handleRepositoryError(promise)
+    const { data } = new ProductResponse(product);
+    return { data };
   }
   async delete(id: string) {
-    const product = await prismaClient.product.delete({
+    const promise = prismaClient.product.delete({
       where: { id },
     });
-    return product as any as Product;
+    await handleRepositoryError(promise)
+    return { data: null };
   }
 }

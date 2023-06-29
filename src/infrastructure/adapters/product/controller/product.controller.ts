@@ -1,5 +1,3 @@
-//TODO: create a better treatment for errors
-
 import { Router } from 'express';
 import { ProductRepository } from '../repository/product.repository';
 import {
@@ -16,69 +14,50 @@ import {
   ReadProductsUseCase,
   UpdateProductUseCase,
 } from '../../../../domain/product/use-cases';
+import { handleExpressControllerError } from '../../../../application/ports/out/handle-controller-error';
 
 export const routes = Router();
-const createProductUseCase = new CreateProductUseCase(new ProductRepository());
-const deleteProductUseCase = new DeleteProductUseCase(new ProductRepository());
-const readProductsUseCase = new ReadProductsUseCase(new ProductRepository());
-const updateProductUseCase = new UpdateProductUseCase(new ProductRepository());
-const readProductByIdUseCase = new ReadProductByIdUseCase(
-  new ProductRepository()
-);
+
+const repository = new ProductRepository();
+const createProductUseCase = new CreateProductUseCase(repository);
+const deleteProductUseCase = new DeleteProductUseCase(repository);
+const readProductsUseCase = new ReadProductsUseCase(repository);
+const updateProductUseCase = new UpdateProductUseCase(repository);
+const readProductByIdUseCase = new ReadProductByIdUseCase(repository);
 
 routes.get('/', async (request, response, next) => {
-  try {
-    const command: ReadProductsCommand = {};
-    const products = await readProductsUseCase.handler(command);
-    return response.status(200).json(products);
-  } catch (error) {
-    return response.status(500).json(error);
-  }
+  const command: ReadProductsCommand = {};
+  const promise = readProductsUseCase.handler(command);
+  return handleExpressControllerError(promise, response);
 });
 
 routes.get('/:id', async (request, response, next) => {
-  try {
-    const command: ReadProductByIdCommand = {
-      id: request.params.id,
-    };
-    const product = await readProductByIdUseCase.handler(command);
-    return response.status(201).json(product);
-  } catch (error) {
-    return response.status(500).json(error);
-  }
+  const command: ReadProductByIdCommand = {
+    id: request.params.id,
+  };
+  const promise = readProductByIdUseCase.handler(command);
+  return handleExpressControllerError(promise, response);
 });
 
 routes.post('/', async (request, response, next) => {
-  try {
-    const command: CreateProductCommand = request.body;
-    const product = await createProductUseCase.handler(command);
-    return response.status(201).json(product);
-  } catch (error) {
-    return response.status(500).json(error);
-  }
+  const command: CreateProductCommand = request.body;
+  const promise = createProductUseCase.handler(command);
+  return handleExpressControllerError(promise, response);
 });
 
 routes.put('/:id', async (request, response, next) => {
-  try {
-    const command: UpdateProductCommand = {
-      id: request.params.id,
-      product: request.body,
-    };
-    const product = await updateProductUseCase.handler(command);
-    return response.status(201).json(product);
-  } catch (error) {
-    return response.status(500).json(error);
-  }
+  const command: UpdateProductCommand = {
+    id: request.params.id,
+    product: request.body,
+  };
+  const promise = updateProductUseCase.handler(command);
+  return handleExpressControllerError(promise, response);
 });
 
 routes.delete('/:id', async (request, response, next) => {
-  try {
-    const command: DeleteProductCommand = { id: request.params.id };
-    await deleteProductUseCase.handler(command);
-    return response.status(204).json();
-  } catch (error) {
-    return response.status(500).json(error);
-  }
+  const command: DeleteProductCommand = { id: request.params.id };
+  const promise = deleteProductUseCase.handler(command);
+  return handleExpressControllerError(promise, response);
 });
 
 export const productRoutes = routes;

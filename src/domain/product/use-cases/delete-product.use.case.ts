@@ -1,13 +1,9 @@
 import { DeleteProductCommand } from '../../../application/product/commands';
-import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
+import { UseCase } from '../../base/UseCase';
+import { Product } from '../entity/product';
 
-export class DeleteProductUseCase {
-  private _repository: ProductRepository;
-
-  constructor(repository: ProductRepository) {
-    this._repository = repository;
-  }
+export class DeleteProductUseCase extends UseCase<Product | Product[]> {
   handler({ id }: DeleteProductCommand) {
-    return this._repository.delete(id);
+    return this.repository.delete(id);
   }
 }
