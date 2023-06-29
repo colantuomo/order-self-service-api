@@ -1,4 +1,20 @@
 # Self-Service Order API
+![Static Badge](https://img.shields.io/badge/backend-black?style=for-the-badge)
+
+![Static Badge](https://img.shields.io/badge/v18.16.0-version?logo=nodedotjs&color=%23339933&labelColor=white&label=Node%2EJS)
+![Static Badge](https://img.shields.io/badge/v4.x-version?logo=express&logoColor=gray&color=gray&labelColor=white&label=Express)
+![Static Badge](https://img.shields.io/badge/v5.x-version?logo=typescript&color=blue&labelColor=white&label=TypeScript)
+
+![Static Badge](https://img.shields.io/badge/database-black?style=for-the-badge)
+
+![Static Badge](https://img.shields.io/badge/v15.3-version?logo=postgresql&color=%234169E1&labelColor=white&label=PostgreSQL)
+![Static Badge](https://img.shields.io/badge/v4.x-version?logo=prisma&logoColor=%232D3748&color=%232D3748&labelColor=white&label=Prisma)
+
+![Static Badge](https://img.shields.io/badge/environment-black?style=for-the-badge)
+
+![Static Badge](https://img.shields.io/badge/v24.0.2-version?logo=docker&color=%232496ED&labelColor=white&label=Docker)
+
+---
 
 This repository contains a Node.js TypeScript project that implements a self-service order API using the Domain-Driven Design (DDD) architecture. The API allows users to place and manage their own orders through a convenient interface.
 
