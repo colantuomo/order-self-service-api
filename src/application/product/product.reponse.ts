@@ -10,10 +10,10 @@ export class ProductResponse implements IResponse<Product | Product[]> {
 
   public format(data: Product | any) {
     if (Array.isArray(data)) {
-      return data.map(({ id, name, price, description }) => new Product(id, name, price, description))
+      return data.map(({ id, name, price, category, description }) => new Product(id, name, price, category, description))
     }
-    const { id, name, price, description } = data;
-    return new Product(id, name, price, description);
+    const { id, name, price, category, description } = data;
+    return new Product(id, name, price, category, description);
   }
 
   public get data() {
