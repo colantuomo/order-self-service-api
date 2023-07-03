@@ -11,7 +11,7 @@ export class Cpf implements IValueObject<string> {
         return this._value;
     }
 
-    validate(): boolean {
+    isInvalid(): boolean {
         return false;
     }
 }

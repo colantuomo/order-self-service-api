@@ -1,4 +1,4 @@
 export interface IValueObject<T> {
     value: T
-    validate(...args: any): boolean;
+    isInvalid(...args: any): boolean;
 }
