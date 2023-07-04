@@ -15,6 +15,7 @@ model Order {
   customerId String?
   items      OrderItems[]
   payment    Payment?
+  totalValue Float      @default(0)
 
   @@map("orders")
 }
@@ -44,7 +45,7 @@ model Product {
 model Customer {
   id     String  @id @default(uuid())
   name   String
-  email  String  @unique
+  email  String  
   cpf    String  @unique
   orders Order[]
 
