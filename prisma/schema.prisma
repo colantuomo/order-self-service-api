@@ -59,3 +59,14 @@ model Payment {
 
   @@map("payments")
 }
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  price       Float
+  description String?
+  category    String
+  orders      Order[] @relation("OrderProduct")
+
+  @@map("products")
+}

@@ -10,11 +10,13 @@ import {
 import {
   CreateProductUseCase,
   DeleteProductUseCase,
+  ReadProductByCategory,
   ReadProductByIdUseCase,
   ReadProductsUseCase,
   UpdateProductUseCase,
 } from '../../../../domain/product/use-cases';
 import { handleExpressControllerError } from '../../../../application/ports/out/handle-controller-error';
+import { ReadyProductByCategoryCommand } from '../../../../application/product/commands/read-product-by-category.command';
 
 export const routes = Router();
 
@@ -24,6 +26,7 @@ const deleteProductUseCase = new DeleteProductUseCase(repository);
 const readProductsUseCase = new ReadProductsUseCase(repository);
 const updateProductUseCase = new UpdateProductUseCase(repository);
 const readProductByIdUseCase = new ReadProductByIdUseCase(repository);
+const readProductByCategory = new ReadProductByCategory(repository);
 
 routes.get('/', async (request, response, next) => {
   const command: ReadProductsCommand = {};
@@ -57,6 +60,12 @@ routes.put('/:id', async (request, response, next) => {
 routes.delete('/:id', async (request, response, next) => {
   const command: DeleteProductCommand = { id: request.params.id };
   const promise = deleteProductUseCase.handler(command);
+  return handleExpressControllerError(promise, response);
+});
+
+routes.get('/category/:category', async (request, response, next) => {
+  const command: ReadyProductByCategoryCommand = { category: request.params.category.toUpperCase() };
+  const promise = readProductByCategory.handler(command);
   return handleExpressControllerError(promise, response);
 });
 
