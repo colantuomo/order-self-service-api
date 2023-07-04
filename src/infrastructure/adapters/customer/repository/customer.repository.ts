@@ -23,7 +23,8 @@ export class CustomerRepository {
                 name: updatedCustomer.name,
                 email: updatedCustomer.email,
                 cpf: updatedCustomer.cpf.value
-            }
+            },
+        
         });
     }
 
@@ -32,7 +33,7 @@ export class CustomerRepository {
     }
 
     async getById(id: string){
-        return await prisma.customer.findFirst({
+        return await prisma.customer.findUniqueOrThrow({
             where: {
                 id: id
             }
