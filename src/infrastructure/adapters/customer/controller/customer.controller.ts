@@ -55,13 +55,13 @@ routes.put('/:id', (request, response, next)=>{
     const command: UpdateCustomerCommand = { id: request.params.id, customer: request.body};
     const id: string = request.params.id
     const updatedCustomer = updateCustomerUserCase.handler(command)
-    return response.status(201).json(updatedCustomer)
+    return handleExpressControllerError(updatedCustomer, response);
 })
 
 routes.delete('/:id', (request, response, next)=>{
     const command: DeleteCustomerCommand = { id: request.params.id}
-    deleteCustomerUserCase.handler(command)
-    return response.status(204)
+    const promise = deleteCustomerUserCase.handler(command)
+    return handleExpressControllerError(promise, response);
 })
 
 export const customerRoutes = routes

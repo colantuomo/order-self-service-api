@@ -44,8 +44,15 @@ export class CustomerRepository implements IRepository<Customer | Customer[]> {
 		const { data } = new CustomerResponse(customer);
 		return { data };
 	}
-	delete(id: string): PromiseResponse<Customer | Customer[]> {
-		throw new Error("Method not implemented.");
+	async delete(id: string): PromiseResponse<Customer | Customer[]> {
+		const promise = prismaClient.customer.delete({
+			where: {
+				id: id
+			}
+		})
+		const customer = await handleRepositoryError(promise)
+		const { data } = new CustomerResponse(customer);
+		return { data };
 	}
 	async new(newCustomer: Customer){
 		let dbCustomer: Prisma.CustomerCreateInput = {
