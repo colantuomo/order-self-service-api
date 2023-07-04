@@ -18,7 +18,7 @@ export class Order implements IEntity{
             this.customer = customer;
         }
         this.createdAt = new Date();
-        this.status = EOrderStatus.ABERTO;
+        this.status = EOrderStatus.PENDENTE;
         this.total_value = 0;
         this.itens = [];
     }

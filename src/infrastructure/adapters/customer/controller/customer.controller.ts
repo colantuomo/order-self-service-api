@@ -9,53 +9,58 @@ import { GetCustomerByIdUseCase } from '../../../../domain/customer/use-cases/ge
 import { Customer } from '../../../../domain/customer/entity/customer';
 import { GetCustomerUseCase } from '../../../../domain/customer/use-cases/get-customer.use-case';
 import { GetCustomerByCPFUseCase } from '../../../../domain/customer/use-cases/get-customer-by-cpf.use-case';
+import { ReadCustomerByIdCommand } from '../../../../application/customer/commands/read-customer-by-id.command';
+import { handleExpressControllerError } from '../../../../application/ports/out/handle-controller-error';
+import { ReadCustomerByCPFCommand } from '../../../../application/customer/commands/read-customer-by-cpf.command';
+import { DeleteCustomerCommand } from '../../../../application/customer/commands/delete-customer.command';
+import { Exception } from '../../../../domain/base/Exception';
 export const routes = express.Router();
 
-const createCustomerUserCase = new CreateCustomerUseCase()
-const updateCustomerUserCase = new UpdateCustomerUseCase()
-const deleteCustomerUserCase = new DeleteCustomerUseCase()
-const getCustomerByCPFUseCase = new GetCustomerByCPFUseCase()
-const getCustomerByIdUseCase = new GetCustomerByIdUseCase()
-const getCustomerUseCase = new GetCustomerUseCase()
 const customerRepository = new CustomerRepository()
+const createCustomerUserCase = new CreateCustomerUseCase(customerRepository)
+const updateCustomerUserCase = new UpdateCustomerUseCase(customerRepository)
+const deleteCustomerUserCase = new DeleteCustomerUseCase(customerRepository)
+const getCustomerByCPFUseCase = new GetCustomerByCPFUseCase(customerRepository)
+const getCustomerByIdUseCase = new GetCustomerByIdUseCase(customerRepository)
+const getCustomerUseCase = new GetCustomerUseCase(customerRepository)
 //Get
 //GetById
 //GetByCPF (CGC)
 //PostCreate
 //PutUpdate
 //Delete
-routes.get('/', (request, response, next)=>{
-    return response.status(200).json(getCustomerUseCase.handler(customerRepository))
+routes.get('/', async (request, response, next)=>{
+    return handleExpressControllerError(getCustomerUseCase.handler(customerRepository), response);
 })
 
 routes.get('/:id', async (request, response, next)=>{
-    const id: string = request.params.id
-    const customer: Customer = await getCustomerByIdUseCase.handler(customerRepository, id)
-    return response.status(200).json(customer)
+    const command: ReadCustomerByIdCommand = { id: request.params.id}
+    const customer = getCustomerByIdUseCase.handler(command)
+    return handleExpressControllerError(customer, response);
 })
 
 routes.get('/:cpf/cpf', async (request, response, next)=>{
-    const cpf: string = request.params.cpf
-    const arrCustomer: Array<Customer> = await getCustomerByCPFUseCase.handler(customerRepository, cpf)
-    return response.status(200).json(arrCustomer)
+    const command: ReadCustomerByCPFCommand = { cpf: request.params.cpf}
+    const customer = getCustomerByCPFUseCase.handler(command)
+    return handleExpressControllerError(customer, response);
 })
 
 routes.post('/', (request, response, next)=>{
-    const body: CreateCustomerCommand = request.body;
-    const createCustomer = createCustomerUserCase.handler(customerRepository, body)
-    return response.status(201).json(createCustomer)
+    const command: CreateCustomerCommand = request.body;
+    const createCustomer = createCustomerUserCase.handler(command)
+    return handleExpressControllerError(createCustomer, response);
 })
 
 routes.put('/:id', (request, response, next)=>{
-    const body: UpdateCustomerCommand = request.body;
+    const command: UpdateCustomerCommand = { id: request.params.id, customer: request.body};
     const id: string = request.params.id
-    const updatedCustomer = updateCustomerUserCase.handler(customerRepository, id, body)
+    const updatedCustomer = updateCustomerUserCase.handler(command)
     return response.status(201).json(updatedCustomer)
 })
 
 routes.delete('/:id', (request, response, next)=>{
-    const id: string = request.params.id
-    deleteCustomerUserCase.handler(customerRepository, id)
+    const command: DeleteCustomerCommand = { id: request.params.id}
+    deleteCustomerUserCase.handler(command)
     return response.status(204)
 })
 

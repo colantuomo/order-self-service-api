@@ -1,19 +1,9 @@
-import { CustomerRepository } from "../../../infrastructure/adapters/customer/repository/customer.repository";
+import { UseCase } from "../../base/UseCase";
+import { PromiseResponse } from "../../base/types/promise-response.type";
 import { Customer } from "../entity/customer";
-
-export class GetCustomerByIdUseCase {
-    constructor(){}
-
-    async handler(customerRepository: CustomerRepository, id: string){
-        return await customerRepository.getById(id).then((result)=>{
-            let createdCustomer = new Customer()
-            if (result !== null){
-                createdCustomer.id = result.id;
-                createdCustomer.name = result.name;
-                createdCustomer.email = result.email;
-                createdCustomer.cpf = result.cpf;
-            }
-            return createdCustomer
-        });
+import { ReadCustomerByIdCommand } from "../../../application/customer/commands/read-customer-by-id.command";
+export class GetCustomerByIdUseCase extends UseCase<Customer | Customer[]>   {
+    handler(command: ReadCustomerByIdCommand): PromiseResponse<Customer | Customer[]> {
+        return this.repository.readById(command.id);
     }
 }
