@@ -26,11 +26,12 @@
     "helmet": "^7.0.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.16",
-    "uuidv4": "^6.2.13",
+    "uuid": "^9.0.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/uuid": "^9.0.2",
     "@vitest/coverage-v8": "^0.32.0",
     "eslint": "^8.42.0",
     "prisma": "^4.16.0",
@@ -43,7 +44,7 @@
     "node": "18.16.0"
   },
   "prettier": {
-    "tabWidth": 2,
+    "tabWidth": 4,
     "singleQuote": true
   }
 }

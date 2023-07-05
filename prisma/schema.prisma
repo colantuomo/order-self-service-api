@@ -8,31 +8,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OrderStatus {
+  PENDING_PAYMENT
+  IN_PREPARATION
+  DONE
+}
+
 model Order {
-  id         String     @id @default(uuid())
-  createdAt  DateTime   @default(now())
-  customer   Customer?  @relation(fields: [customerId], references: [id])
+  id         String       @id @default(uuid())
+  createdAt  DateTime     @default(now())
+  customer   Customer?    @relation(fields: [customerId], references: [id])
   customerId String?
   items      OrderItems[]
   payment    Payment?
-  totalValue Float      @default(0)
+  totalValue Float        @default(0)
+  status OrderStatus
 
   @@map("orders")
 }
 
-model OrderItems{
+model OrderItems {
   orderId   String
-  order     Order @relation(fields: [orderId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id])
   productId String
   product   Product @relation(fields: [productId], references: [id])
-  quantity  Int 
+  quantity  Int
 
   @@id([orderId, productId])
   @@map("order-item")
 }
 
 model Product {
-  id          String  @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   price       Float
   description String?
@@ -45,7 +52,7 @@ model Product {
 model Customer {
   id     String  @id @default(uuid())
   name   String
-  email  String  
+  email  String
   cpf    String  @unique
   orders Order[]
 

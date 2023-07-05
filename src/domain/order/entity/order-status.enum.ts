@@ -1,7 +1,5 @@
-
-export enum EOrderStatus{
-    PENDENTE = 'PENDENTE',
-    EM_PREPARO = 'EM_PREPARO',
-    PRONTO = 'PRONTO',
-    FINALIZADO = 'FINALIZADO'
+export enum EOrderStatus {
+    PENDING_PAYMENT = 'PENDING_PAYMENT',
+    IN_PREPARATION = 'IN_PREPARATION',
+    DONE = 'DONE',
 }

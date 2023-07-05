@@ -1,12 +1,29 @@
+import { v4 } from 'uuid';
+import { CreateOrderCommand } from '../../../application/order/commands/create-order.command';
+import { UseCase } from '../../base/UseCase';
+import { PromiseResponse } from '../../base/types/promise-response.type';
+import { Order } from '../entity/order';
+import { EOrderStatus } from '../entity/order-status.enum';
 
-import { CreateOrderCommand } from "../../../application/order/commands/create-order.command";
-import { UseCase } from "../../base/UseCase";
-import { PromiseResponse } from "../../base/types/promise-response.type";
-import { Order } from "../entity/order";
+export class CreateOrderUseCase extends UseCase<Order | Order[]> {
+    handler({
+        products,
+        customerId,
+    }: CreateOrderCommand): PromiseResponse<Order | Order[]> {
+        const totalPerProduct = products.map(({ price, quantity }) => {
+            return price * quantity;
+        });
 
-export class CreateOrderUseCase extends UseCase<Order | Order[]>{
-	handler(command: CreateOrderCommand): PromiseResponse<Order | Order[]> {
-		const order = new Order('', command.customer)
-		return this.repository.create(order)
-	}
+        const totalOrdeValue = totalPerProduct.reduce(
+            (acc, value) => acc + value
+        );
+
+        const order = new Order(
+            v4(),
+            EOrderStatus.PENDING_PAYMENT,
+            totalOrdeValue,
+            customerId
+        );
+        return this.repository.create(order);
+    }
 }
