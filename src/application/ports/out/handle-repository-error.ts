@@ -3,7 +3,7 @@ import { RepositoryException } from "../../../infrastructure/adapters/exceptions
 
 export async function handleRepositoryError<T>(promise: Promise<T>) {
   try {
-    return await promise;
+    return promise;
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       //TODO: find a way to retrieve correct status code;
