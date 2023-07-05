@@ -1,4 +1,5 @@
 # Self-Service Order API
+
 ![Static Badge](https://img.shields.io/badge/backend-black?style=for-the-badge)
 
 ![Static Badge](https://img.shields.io/badge/v18.16.0-version?logo=nodedotjs&color=%23339933&labelColor=white&label=Node%2EJS)
@@ -23,25 +24,25 @@ This repository contains a Node.js TypeScript project that implements a self-ser
 ## Table of contents
 
 * [Usage documentation](#table-of-contents)
-   * [Usage with Docker](#table-of-contents)
-      * [Prerequisites](#docker-prerequisites)
-      * [Installation](#docker-installation)
-      * [Usage](#docker-usage)
-   * [Usage with Node.JS](#table-of-contents)
-      * [Prerequisites](#node-prerequisites)
-      * [Installation](#node-installation)
-      * [Usage](#node-usage)
-   * [Postman](#postman)
+  * [Usage with Docker](#table-of-contents)
+    * [Prerequisites](#docker-prerequisites)
+    * [Installation](#docker-installation)
+  * [Usage](#docker-usage)
+  * [Usage with Node.JS](#table-of-contents)
+    * [Prerequisites](#node-prerequisites)
+    * [Installation](#node-installation)
+    * [Usage](#node-usage)
+  * [Postman](#postman)
 * [Architecture documentation](#table-of-contents)
-   * [Hexagonal Structure](#hexagonal-structure)
-   * [Folder Structure](#folder-structure)
+  * [Hexagonal Structure](#hexagonal-structure)
+  * [Folder Structure](#folder-structure)
+  * [Database](#database)
 * [DDD](#table-of-contents)
-   * [Glossary](/docs/glossary.md)
-   * [Domain Storytelling](#domain-storytelling)
-   * [Event Storming](#event-storming)
+  * [Glossary](/docs/glossary.md)
+  * [Domain Storytelling](#domain-storytelling)
+  * [Event Storming](#event-storming)
 * [External Links](#external-links)
 * [Contributors](#contributors)
-
 
 ---
 
@@ -49,7 +50,7 @@ This repository contains a Node.js TypeScript project that implements a self-ser
 
 To run this project, ensure that you have the following installed:
 
-- [Docker](https://www.docker.com/)
+* [Docker](https://www.docker.com/)
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -75,7 +76,7 @@ To run this project, ensure that you have the following installed:
 
 To run this project, ensure that you have the following installed:
 
-- [Node.JS](https://nodejs.org) (v18.16.0)
+* [Node.JS](https://nodejs.org) (v18.16.0)
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -90,6 +91,7 @@ To run this project, ensure that you have the following installed:
    ```shell
    npm install
    ```
+
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
@@ -126,15 +128,23 @@ This will compile the TypeScript code, start the server, and watch for any file 
 
 ---
 
+## Database
+
+![database](docs/assets/database.png "Database")
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
 ## Folder Structure
 
 The project follows a DDD-inspired folder structure to separate concerns and maintain a clear code organization. Here's an overview of the key directories:
 
-- `src`
-  - `domain`: Contains the core business models, services, and repositories.
-  - `application`: Implements the application layer, which orchestrates the domain logic and exposes it through use cases.
-  - `infrastructure`: Provides infrastructure-related implementations, such as database connectors or external service clients.
-  - `web`: Handles API-specific concerns such as route definitions and request validation.
+* `src`
+  * `domain`: Contains the core business models, services, and repositories.
+  * `application`: Implements the application layer, which orchestrates the domain logic and exposes it through use cases.
+  * `infrastructure`: Provides infrastructure-related implementations, such as database connectors or external service clients.
+  * `web`: Handles API-specific concerns such as route definitions and request validation.
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -151,6 +161,7 @@ The project follows a DDD-inspired folder structure to separate concerns and mai
 ---
 
 ### Preparation And Delivery
+
 ![domain_storytelling_2](docs/assets/2_domain_storytelling_preparation_and_delivery.png "Preparation And Delivery")
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
