@@ -1,12 +1,9 @@
-import { CustomerRepository } from "../../../infrastructure/adapters/customer/repository/customer.repository";
+import { ReadCustomerCommand } from "../../../application/customer/commands/read-customer.command";
+import { UseCase } from "../../base/UseCase";
+import { Customer } from "../entity/customer";
 
-export class GetCustomerUseCase {
-    customerRepository: CustomerRepository;
-    constructor(){
-        this.customerRepository = new CustomerRepository()
-    }
-
-    handler(customerRepository: CustomerRepository){
-        return customerRepository.get();
+export class GetCustomerUseCase extends UseCase<Customer | Customer[]>  {
+    handler(_: ReadCustomerCommand){
+        return this.repository.read();
     }
 }
