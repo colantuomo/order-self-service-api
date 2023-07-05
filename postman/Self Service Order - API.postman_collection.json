@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9824b53f-16c0-4236-acb5-fc502f598852",
+		"_postman_id": "ba8240c3-5d53-4213-9c23-4052488029c2",
 		"name": "Self Service Order - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -53,7 +53,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "ef6e7a73-cf0d-47eb-a373-22522d423ff2"
 								}
 							]
 						}
@@ -84,13 +84,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{self_service_order_host}}/api/products",
+							"raw": "{{self_service_order_host}}/api/products/:id",
 							"host": [
 								"{{self_service_order_host}}"
 							],
 							"path": [
 								"api",
-								"products"
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ef6e7a73-cf0d-47eb-a373-22522d423ff2"
+								}
 							]
 						}
 					},
@@ -142,7 +149,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Willian\",\r\n    \"cpf\": \"1212312\",\r\n    \"email\": \"dsada1231s\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Willian\",\r\n    \"cpf\": \"38267498709\",\r\n    \"email\": \"will@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -150,11 +157,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/customers",
+							"raw": "{{self_service_order_host}}/api/customers",
 							"host": [
-								"localhost"
+								"{{self_service_order_host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"customers"
@@ -169,16 +175,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/customers/1212312/cpf",
+							"raw": "{{self_service_order_host}}/api/customers/:cpf/cpf",
 							"host": [
-								"localhost"
+								"{{self_service_order_host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"customers",
-								"1212312",
+								":cpf",
 								"cpf"
+							],
+							"variable": [
+								{
+									"key": "cpf",
+									"value": "38267498709"
+								}
 							]
 						}
 					},
@@ -196,7 +207,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"e200706a-ff76-4f33-9026-e6b159ae1d25\"\r\n}",
+							"raw": "{\r\n    \"customerId\": \"e200706a-ff76-4f33-9026-e6b159ae1d25\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"e200706a-ff76-4f33-9026-e6b159ae1d25\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,11 +215,28 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/orders",
+							"raw": "{{self_service_order_host}}/api/orders",
 							"host": [
-								"localhost"
+								"{{self_service_order_host}}"
 							],
-							"port": "8080",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{self_service_order_host}}/api/orders",
+							"host": [
+								"{{self_service_order_host}}"
+							],
 							"path": [
 								"api",
 								"orders"
