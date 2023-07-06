@@ -6,6 +6,7 @@ import { PromiseResponse } from '../../../../domain/base/types/promise-response.
 import { Order } from '../../../../domain/order/entity/order';
 import { OrderItem } from '../../../../domain/order/entity/order-item';
 import { prismaClient } from '../../../database/prisma';
+import { ETransactionStatus } from '../../../../domain/payment/entity/transaction-status.enum';
 
 export class OrderRepository{
     async create(item: Order): PromiseResponse<Order | Order[]> {
@@ -25,6 +26,12 @@ export class OrderRepository{
             },
             items: {
                 create: item.items.map((item) => ({ quantity: item.quantity, product: { connect: { id: item.product.id } } }))      
+            },
+            payment: {
+                create: {
+                    amount: item.totalValue,
+                    status: ETransactionStatus.PENDENTE
+                }
             }
         }
 
