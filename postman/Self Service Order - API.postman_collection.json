@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba8240c3-5d53-4213-9c23-4052488029c2",
+		"_postman_id": "200f5a1f-8383-4137-b2e1-6710975eba72",
 		"name": "Self Service Order - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"McLanche Feliz\",\n    \"price\": 15.00\n}",
+							"raw": "{\n    \"name\": \"McLanche Feliz\",\n    \"category\": \"FOOD\",\n    \"price\": 15.00\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -73,6 +73,18 @@
 							"path": [
 								"api",
 								"products"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "753da964-a243-4003-8914-e63df301e087",
+									"disabled": true
+								},
+								{
+									"key": "ids",
+									"value": "026ba183-db5d-4c37-a9cc-d63c0c75d041",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -207,7 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"e200706a-ff76-4f33-9026-e6b159ae1d25\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"e200706a-ff76-4f33-9026-e6b159ae1d25\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"customerId\": \"2c0c2702-1311-4cf0-9595-884fea8539b5\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"753da964-a243-4003-8914-e63df301e087\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

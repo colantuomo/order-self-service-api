@@ -5,9 +5,12 @@ import { CreateOrderUseCase } from '../../../../domain/order/use-cases/create-or
 import { handleExpressControllerError } from '../../../../application/ports/out/handle-controller-error';
 import { GetOrdersCommand } from '../../../../application/order/commands/get-orders.command';
 import { GetOrdersUseCase } from '../../../../domain/order/use-cases/get-orders.use-case';
+import { ProductRepository } from '../../product/repository/product.repository';
 export const routes = express.Router();
 
 const orderRepository = new OrderRepository();
+const productsRepository = new ProductRepository();
+
 const createOrderUseCase = new CreateOrderUseCase(orderRepository);
 const getOrdersUseCase = new GetOrdersUseCase(orderRepository);
 
@@ -44,8 +47,8 @@ routes.get('/customer/:customerId', (request, response, next) => {
  *	}
  */
 routes.post('/', async (request, response, next) => {
-    let command: CreateOrderCommand = request.body;
-    const promise = createOrderUseCase.handler(command);
+    const command: CreateOrderCommand = request.body;
+    const promise = createOrderUseCase.handler(command, productsRepository);
     return handleExpressControllerError(promise, response);
 });
 
