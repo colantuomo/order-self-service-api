@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b3a5d9f1-d9ef-4b95-9e74-461531fb0669",
+		"_postman_id": "200f5a1f-8383-4137-b2e1-6710975eba72",
 		"name": "Self Service Order - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -73,6 +73,18 @@
 							"path": [
 								"api",
 								"products"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "753da964-a243-4003-8914-e63df301e087",
+									"disabled": true
+								},
+								{
+									"key": "ids",
+									"value": "026ba183-db5d-4c37-a9cc-d63c0c75d041",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -207,7 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"89612a60-9c9d-4864-91eb-fc64a614d939\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"a9e4b105-aaf2-4fd4-9431-192d8ec1b4b9\",\r\n            \"quantity\": 2,\r\n            \"price\": 10\r\n        },\r\n        {\r\n            \"id\": \"e8230171-ffc8-4635-a0cf-afbf249dcfb7\",\r\n            \"quantity\": 1,\r\n            \"price\": 8\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"customerId\": \"2c0c2702-1311-4cf0-9595-884fea8539b5\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"753da964-a243-4003-8914-e63df301e087\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
