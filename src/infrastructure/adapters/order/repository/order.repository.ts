@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { OrderResponse } from '../../../../application/order/order.response';
 import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 import { IRepository } from '../../../../domain/base/interfaces';
@@ -6,22 +7,28 @@ import { Order } from '../../../../domain/order/entity/order';
 import { OrderItem } from '../../../../domain/order/entity/order-item';
 import { prismaClient } from '../../../database/prisma';
 
-export class OrderRepository implements IRepository<Order | Order[]> {
+export class OrderRepository{
     async create(item: Order): PromiseResponse<Order | Order[]> {
-        let promise = prismaClient.order.create({
-            data: {
-                id: item.id,
-                createdAt: item.createdAt,
-                status: item.status,
-                totalValue: item.totalValue,
-                customer: {
-                    connect: {
-                        id: item.customerId,
-                    },
-                },
-            },
-        });
+        if (item.items === undefined){
+            item.items = []
+        }
 
+        let newOrder: Prisma.OrderCreateInput = {
+            id: item.id,
+            createdAt: item.createdAt,
+            status: item.status,
+            totalValue: item.totalValue,
+            customer: {
+                connect: {
+                    id: item.customerId,
+                }
+            },
+            items: {
+                create: item.items.map((item) => ({ quantity: item.quantity, product: { connect: { id: item.product.id } } }))      
+            }
+        }
+
+        let promise = prismaClient.order.create({ data: newOrder });
         const order = await handleRepositoryError(promise);
         const { data } = new OrderResponse(order);
         return { data };

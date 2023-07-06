@@ -9,7 +9,7 @@ export class OrderItem {
 
     constructor(product: Product, quantity: number){
         this._product = product;
-        this._unit_value = product.unit_value;
+        this._unit_value = product.price;
         this._quantity = quantity;
         this._total_value = this.unit_value * this.quantity;
     }

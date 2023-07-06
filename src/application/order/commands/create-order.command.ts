@@ -2,9 +2,11 @@ import { ICommand } from '../../../domain/base/interfaces';
 
 export interface CreateOrderCommand extends ICommand {
     customerId?: string;
-    products: Array<{
-        id: string;
-        price: number;
-        quantity: number;
-    }>;
+    products: Array<ICreateOrderProducts>;
+}
+
+export interface ICreateOrderProducts{
+    id: string;
+    price: number;
+    quantity: number;
 }
