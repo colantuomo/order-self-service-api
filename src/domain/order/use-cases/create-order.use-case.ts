@@ -1,13 +1,10 @@
 import { v4 } from 'uuid';
-import { CreateOrderCommand, ICreateOrderProducts } from '../../../application/order/commands/create-order.command';
+import { CreateOrderCommand } from '../../../application/order/commands/create-order.command';
 import { UseCase } from '../../base/UseCase';
 import { PromiseResponse } from '../../base/types/promise-response.type';
 import { Order } from '../entity/order';
 import { EOrderStatus } from '../entity/order-status.enum';
-import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
 import { Product } from '../../product/entity/product';
-import { ReadProductByIdUseCase } from '../../product/use-cases';
-import { IEntity } from '../../base/interfaces';
 import { OrderItem } from '../entity/order-item';
 import { ProductCategories } from '../../product/enums';
 
@@ -16,10 +13,14 @@ export class CreateOrderUseCase extends UseCase<Order | Order[]> {
         products,
         customerId,
     }: CreateOrderCommand): PromiseResponse<Order | Order[]>{
-        const totalOrderValue = products.reduce((acc, { price, quantity }) => {
-            acc += price * quantity
-            return acc;
-        }, 0);
+        let totalOrderValue = 0;
+
+        if (products.length > 0){
+            const totalOrderValue = products.reduce((acc, { price, quantity }) => {
+                acc += price * quantity
+                return acc;
+            }, 0);
+        }
 
         const order = new Order( 
             v4(), 
