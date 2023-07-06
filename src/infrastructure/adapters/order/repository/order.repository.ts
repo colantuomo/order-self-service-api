@@ -7,10 +7,15 @@ import { Order } from '../../../../domain/order/entity/order';
 import { OrderItem } from '../../../../domain/order/entity/order-item';
 import { prismaClient } from '../../../database/prisma';
 
-export class OrderRepository{
+export class OrderRepository implements IRepository<Order | Order[]> {
     async create(item: Order): PromiseResponse<Order | Order[]> {
-        if (item.items === undefined){
-            item.items = []
+        let customer = {};
+        if (item.customerId) {
+            customer = {
+                connect: {
+                    id: item?.customerId,
+                },
+            };
         }
 
         let newOrder: Prisma.OrderCreateInput = {
@@ -18,15 +23,14 @@ export class OrderRepository{
             createdAt: item.createdAt,
             status: item.status,
             totalValue: item.totalValue,
-            customer: {
-                connect: {
-                    id: item.customerId,
-                }
-            },
+            customer,
             items: {
-                create: item.items.map((item) => ({ quantity: item.quantity, product: { connect: { id: item.product.id } } }))      
-            }
-        }
+                create: item?.items?.map((item) => ({
+                    quantity: item.quantity,
+                    product: { connect: { id: item.product.id } },
+                })),
+            },
+        };
 
         let promise = prismaClient.order.create({ data: newOrder });
         const order = await handleRepositoryError(promise);
@@ -34,7 +38,23 @@ export class OrderRepository{
         return { data };
     }
     async read(): PromiseResponse<Order | Order[]> {
-        const promise = prismaClient.order.findMany();
+        const promise = prismaClient.order.findMany({
+            include: {
+                customer: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    },
+                },
+                items: {
+                    select: {
+                        product: true,
+                        quantity: true,
+                    },
+                },
+            },
+        });
         const order = await handleRepositoryError(promise);
         const { data } = new OrderResponse(order);
         return { data };

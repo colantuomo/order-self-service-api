@@ -5,8 +5,7 @@ export interface CreateOrderCommand extends ICommand {
     products: Array<ICreateOrderProducts>;
 }
 
-export interface ICreateOrderProducts{
+export interface ICreateOrderProducts {
     id: string;
-    price: number;
     quantity: number;
 }
