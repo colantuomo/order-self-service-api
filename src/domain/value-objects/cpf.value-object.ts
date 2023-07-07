@@ -1,5 +1,4 @@
 import { IValueObject } from "../base/interfaces/IValueObject";
-import { CPFError } from "./cpf.exception";
 
 export class Cpf implements IValueObject<string> {
 	private _value: string;
@@ -7,19 +6,11 @@ export class Cpf implements IValueObject<string> {
 	constructor(value: string) {
 		this._value = value;
 	}
+	
 	isInvalid(...args: any): boolean {
 		return !this.isValid(this._value)
 	}
 	
-	validate(...args: any): boolean {
-		return this.isValid(this._value)
-	}
-
-	throwError(){
-		throw new CPFError()
-	} 
-	
-
 	public get value(): string {
 		return this._value;
 	}
