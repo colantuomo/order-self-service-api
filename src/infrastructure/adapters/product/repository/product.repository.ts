@@ -4,6 +4,7 @@ import { IRepository } from '../../../../domain/base/interfaces/IRepository';
 import { ProductResponse } from '../../../../application/product/product.reponse';
 import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 import { ProductCategories } from '../../../../domain/product/enums';
+import { RepositoryException } from '../../exceptions/repository.exception';
 
 export class ProductRepository implements IRepository<Product | Product[]> {
     async create({ name, price, category, description }: Product) {
@@ -25,8 +26,11 @@ export class ProductRepository implements IRepository<Product | Product[]> {
             id: { in: ids },
         };
         const promise = prismaClient.product.findMany({ where });
-        const product = await handleRepositoryError(promise);
-        const { data } = new ProductResponse(product) as { data: Product[] };
+        const products = await handleRepositoryError(promise);
+        if (ids?.length && !products.length) {
+            throw new RepositoryException('Products not founded', 404);
+        }
+        const { data } = new ProductResponse(products) as { data: Product[] };
         return { data };
     }
 

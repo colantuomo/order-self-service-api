@@ -20,10 +20,10 @@ function mergeArrays(inputProducts: any[], validatedProducts: Product[]) {
 export class CreateOrderUseCase extends UseCase<Order | Order[]> {
     async handler(
         { products, customerId }: CreateOrderCommand,
-        aggregateRepository: ProductRepository
+        productRepository: ProductRepository
     ): PromiseResponse<Order | Order[]> {
         const ids = products.map(({ id }) => id);
-        const { data } = await aggregateRepository.read(ids);
+        const { data } = await productRepository.read(ids);
         const validatedProducts = mergeArrays(products, data);
 
         let totalOrderValue = 0;

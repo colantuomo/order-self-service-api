@@ -10,8 +10,8 @@ export class OrderResponse implements IResponse<Order | Order[]> {
     public format(data: Order | any) {
         if (Array.isArray(data)) {
             return data.map(
-                ({ id, customerId, status, totalValue, items, customer }) =>
-                    new Order(id, status, totalValue, customerId, items, customer)
+                ({ id, customerId, status, totalValue, createdAt, items, customer }) =>
+                    new Order(id, status, totalValue, createdAt, customerId, items, customer)
             );
         }
 
@@ -19,6 +19,7 @@ export class OrderResponse implements IResponse<Order | Order[]> {
             data.id,
             data.status,
             data.totalValue,
+            data.createdAt,
             data.customerId,
             data.items,
             data.customer
