@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9824b53f-16c0-4236-acb5-fc502f598852",
+		"_postman_id": "200f5a1f-8383-4137-b2e1-6710975eba72",
 		"name": "Self Service Order - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"McLanche Feliz\",\n    \"price\": 15.00\n}",
+							"raw": "{\n    \"name\": \"McLanche Feliz\",\n    \"category\": \"FOOD\",\n    \"price\": 15.00\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,7 +53,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "ef6e7a73-cf0d-47eb-a373-22522d423ff2"
 								}
 							]
 						}
@@ -73,6 +73,18 @@
 							"path": [
 								"api",
 								"products"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "753da964-a243-4003-8914-e63df301e087",
+									"disabled": true
+								},
+								{
+									"key": "ids",
+									"value": "026ba183-db5d-4c37-a9cc-d63c0c75d041",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -84,13 +96,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{self_service_order_host}}/api/products",
+							"raw": "{{self_service_order_host}}/api/products/:id",
 							"host": [
 								"{{self_service_order_host}}"
 							],
 							"path": [
 								"api",
-								"products"
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "ef6e7a73-cf0d-47eb-a373-22522d423ff2"
+								}
 							]
 						}
 					},
@@ -142,7 +161,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Willian\",\r\n    \"cpf\": \"1212312\",\r\n    \"email\": \"dsada1231s\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Willian\",\r\n    \"cpf\": \"38267498709\",\r\n    \"email\": \"will@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -150,11 +169,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/customers",
+							"raw": "{{self_service_order_host}}/api/customers",
 							"host": [
-								"localhost"
+								"{{self_service_order_host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"customers"
@@ -169,16 +187,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/customers/1212312/cpf",
+							"raw": "{{self_service_order_host}}/api/customers/:cpf/cpf",
 							"host": [
-								"localhost"
+								"{{self_service_order_host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"customers",
-								"1212312",
+								":cpf",
 								"cpf"
+							],
+							"variable": [
+								{
+									"key": "cpf",
+									"value": "38267498709"
+								}
 							]
 						}
 					},
@@ -196,7 +219,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"e200706a-ff76-4f33-9026-e6b159ae1d25\"\r\n}",
+							"raw": "{\r\n    \"customerId\": \"2c0c2702-1311-4cf0-9595-884fea8539b5\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"753da964-a243-4003-8914-e63df301e087\",\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,11 +227,28 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/orders",
+							"raw": "{{self_service_order_host}}/api/orders",
 							"host": [
-								"localhost"
+								"{{self_service_order_host}}"
 							],
-							"port": "8080",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{self_service_order_host}}/api/orders",
+							"host": [
+								"{{self_service_order_host}}"
+							],
 							"path": [
 								"api",
 								"orders"
