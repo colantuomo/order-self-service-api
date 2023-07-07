@@ -29,10 +29,10 @@ services:
       PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
     restart: unless-stopped
 
-  app:
+  app-dev:
     hostname: app
     stdin_open: true
     build:
@@ -46,9 +46,9 @@ services:
       - database
     volumes:
       - ./:/app/
-      - node-modules:/app/node_modules/
+      - node_modules_dev:/app/node_modules/
 
 volumes:
   postgres_data:
-  pgadmin-data:
-  node-modules:
+  pgadmin_data:
+  node_modules_dev:
