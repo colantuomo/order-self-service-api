@@ -1,4 +1,4 @@
-import { Exception } from "../base/Exception";
+import { Exception } from "../../base/Exception";
 
 export class CPFError extends Exception {
 	constructor() {
