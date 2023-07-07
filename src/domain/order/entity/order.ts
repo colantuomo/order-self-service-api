@@ -16,13 +16,14 @@ export class Order implements IEntity {
         id: string,
         status: EOrderStatus,
         totalValue: number,
+        createdAt: Date,
         customerId?: string,
         items?: Array<OrderItem>,
         customer?: Customer
     ) {
         this.id = id;
         this.customerId = customerId;
-        this.createdAt = new Date();
+        this.createdAt = createdAt;
         this.status = status;
         this.totalValue = totalValue;
         this.items = items;
