@@ -74,6 +74,7 @@ In some OS's its necessary to run these commands as `sudo`
 ## Tech Challenge
 
 We created a collection in postman to execute all challenges steps easily.
+You can find inside `postman` folder at the root of this project
 
 
 - Cadastro do cliente
