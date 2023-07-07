@@ -53,19 +53,87 @@ To run this project, ensure that you have the following installed:
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
----
+## Docker Usage
 
-## Docker Installation
+To run in prod mode:
+```
+docker compose up -d
+```
 
-(WIP)
+To run in dev mode (with hot reload):
+```
+docker compose -f docker-compose-dev.yml up -d
+```
+
+In some OS's its necessary to run these commands as `sudo`
+
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
 ---
+## Tech Challenge
 
-## Docker Usage
+We created a collection in postman to execute all challenges steps easily.
 
-(WIP)
+
+- Cadastro do cliente
+
+```cURL
+POST
+curl --location 'http://localhost:8080/api/customers' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name":"Michael Jackson",
+    "cpf": "38267498709",
+    "email": "michael.j@gmail.com"
+}'
+```
+- Identificação do cliente via CPF
+```cURL
+GET
+curl --location 'http://localhost:8080/api/customers/38267498709/cpf'
+```
+- Criar, editar e remover de Produto
+```cURL
+POST (Create Product)
+curl --location 'http://localhost:8080/api/products' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Nuggets",
+    "category": "SIDE_DISH",
+    "price": 5
+}'
+```
+```cURL
+PUT (Update Product)
+curl --location --request PUT 'http://localhost:8080/api/products/48a57c23-b50f-4567-b191-0aa17225d1c0' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Big Mac",
+    "price": 22.00
+}'
+```
+```cURL
+GET (All Products)
+curl --location 'http://localhost:8080/api/products'
+```
+```cURL
+DELETE (Delete Product)
+curl --location --request DELETE 'http://localhost:8080/api/products/48a57c23-b50f-4567-b191-0aa17225d1c0'
+```
+- Buscar produtos por categoria
+```cURL
+curl --location 'http://localhost:8080/api/product/category/FOOD'
+```
+- Fake Checkout - Enviar pedidos para a fila
+```cURL
+
+```
+- Listar todos os pedidos
+```cURL
+curl --location 'http://localhost:8080/api/orders'
+```
+
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
