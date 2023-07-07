@@ -6,13 +6,16 @@ import { handleExpressControllerError } from '../../../../application/ports/out/
 import { GetOrdersCommand } from '../../../../application/order/commands/get-orders.command';
 import { GetOrdersUseCase } from '../../../../domain/order/use-cases/get-orders.use-case';
 import { ProductRepository } from '../../product/repository/product.repository';
+import { PaymentRepository } from '../../payment/repository/payment.repository';
 export const routes = express.Router();
 
 const orderRepository = new OrderRepository();
 const productsRepository = new ProductRepository();
+const paymentRepository = new PaymentRepository();
 
 const createOrderUseCase = new CreateOrderUseCase(orderRepository);
 const getOrdersUseCase = new GetOrdersUseCase(orderRepository);
+
 
 routes.get('/', (request, response, next) => {
     const command: GetOrdersCommand = {};

@@ -3,18 +3,19 @@ import { IRepository } from '../../../../domain/base/interfaces/IRepository';
 import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 import { Payment } from '../../../../domain/payment/entity/payment';
 import { PromiseResponse } from '../../../../domain/base/types/promise-response.type';
+import { PaymentResponse } from '../../../../application/payment/payment.response';
 
 export class PaymentRepository implements IRepository<Payment | Payment[]> {
-  constructor() {
+	constructor() {
 
-  }
+	}
 
-  updateExternalPaymentId(paymentId: string, externalPaymentId: string) {
+	updateExternalPaymentId(paymentId: string, externalPaymentId: string) {
 
-  }
+	}
 
-  async create(item: Payment ): PromiseResponse<Payment | Payment[]> {
-    throw new Error("Method not implemented.");
+  	async create(item: Payment ): PromiseResponse<Payment | Payment[]> {
+    	throw new Error("Method not implemented.");
 	}
 
 	async read(...args: unknown[]): PromiseResponse<Payment | Payment[]> {
@@ -35,8 +36,28 @@ export class PaymentRepository implements IRepository<Payment | Payment[]> {
 		return { data };
 	}
 
-	update(id: string, item: Payment | Payment[]): PromiseResponse<Payment | Payment[]> {
-		throw new Error("Method not implemented.");
+	async update(id: string, item: Payment): PromiseResponse<Payment | Payment[]> {
+		const promise = prismaClient.payment.update({
+			where: { id },
+			data: {
+				externalPaymentId: item.externalTransactionId
+			}
+		})
+		const payment = await handleRepositoryError(promise);
+		const { data } = new PaymentResponse(payment);
+		return { data }
+	}
+
+	async updateStatus(id: string, item: Payment): PromiseResponse<Payment | Payment[]> {
+		const promise = prismaClient.payment.update({
+			where: { id },
+			data: {
+				status: item.status
+			}
+		})
+		const payment = await handleRepositoryError(promise);
+		const { data } = new PaymentResponse(payment);
+		return { data }
 	}
 
 	updateItem(id: string, item: PaymentItem | PaymentItem[]): PromiseResponse<PaymentItem | PaymentItem[]>{

@@ -59,6 +59,7 @@ export class CreateOrderUseCase extends UseCase<Order | Order[]> {
                 );
             })
         );
+
         return this.repository.create(order);
     }
 }

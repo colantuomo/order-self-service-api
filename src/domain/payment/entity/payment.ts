@@ -1,16 +1,15 @@
-import { uuid } from "uuidv4";
+import { v4 } from "uuid";
 import { EPaymentStatus } from "./payment-status.enum";
+import { IEntity } from "../../base/interfaces";
 
-export class Payment {
+export class Payment implements IEntity {
     id: string;
-    orderId: string;
-    externalOrderId: string | null;
+    externalTransactionId: string | null;
     status: EPaymentStatus;
 
-    constructor(orderId: string){
-        this.id = uuid()
-        this.orderId = orderId;
-        this.externalOrderId = null;
+    constructor(externalId: string ){
+        this.id = v4()
+        this.externalTransactionId = null;
         this.status = EPaymentStatus.PENDENTE;
     }
 }

@@ -1,5 +1,5 @@
 import { Payment } from "../../domain/payment/entity/payment";
-import { uuid } from "uuidv4";
+import { v4 } from "uuid";
 import { PaymentRepository } from "../adapters/payment/repository/payment.repository";
 
 export class MercadoPagoService {
@@ -12,13 +12,12 @@ export class MercadoPagoService {
   async createTransaction(orderId: string, value: number) {
     const externalOrderId = await this.sendPayment(value);
 
-    this.paymentRepository.updateExternalPaymentId(orderId, externalOrderId);
   }
 
   async sendPayment(value: number) {
     // CALL Mercado Pago API
 
-    return uuid();
+    return v4();
   }
 
 }
