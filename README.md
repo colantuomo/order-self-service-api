@@ -129,7 +129,11 @@ curl --location 'http://localhost:8080/api/product/category/FOOD'
 ```
 - Fake Checkout - Enviar pedidos para a fila
 ```cURL
-
+curl --location --request PUT 'http://localhost:8080/api/payments/1b3140cb-1a77-484c-9bab-c0cbc0f33d5c/checkout' \
+--header 'Content-Type: application/json' \
+--data '{
+    "status": "PAID"
+}'
 ```
 - Listar todos os pedidos
 ```cURL
