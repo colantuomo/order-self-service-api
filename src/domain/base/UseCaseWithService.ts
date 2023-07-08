@@ -1,11 +1,10 @@
-import { ICommand, IRepository, IResponse } from './interfaces';
-import { IPaymentService } from './interfaces/IPaymentService';
+import { ICommand, IRepository } from './interfaces';
 import { PromiseResponse } from './types/promise-response.type';
 
 export abstract class UseCaseWithService<T, S, R = IRepository<T>> {
 	private _repository: R;
-	private _service: IPaymentService<S>;
-	constructor(repository: R, service: IPaymentService<S>) {
+	private _service: S;
+	constructor(repository: R, service: S) {
 		this._repository = repository;
 		this._service = service;
 	}
@@ -19,7 +18,7 @@ export abstract class UseCaseWithService<T, S, R = IRepository<T>> {
 		return this._repository;
 	}
 
-	public get service(): IPaymentService<S> {
+	public get service(): S {
 		return this._service;
 	}
 }

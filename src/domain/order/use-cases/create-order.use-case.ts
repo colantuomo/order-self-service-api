@@ -7,6 +7,7 @@ import { EOrderStatus } from '../entity/order-status.enum';
 import { Product } from '../../product/entity/product';
 import { OrderItem } from '../entity/order-item';
 import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
+import { IResponse } from '../../base/interfaces';
 
 function mergeArrays(inputProducts: any[], validatedProducts: Product[]) {
     return validatedProducts.map((item1) => {
@@ -21,7 +22,7 @@ export class CreateOrderUseCase extends UseCase<Order | Order[]> {
     async handler(
         { products, customerId }: CreateOrderCommand,
         productRepository: ProductRepository
-    ): PromiseResponse<Order | Order[]> {
+    ): PromiseResponse<Order> {
         const ids = products.map(({ id }) => id);
         const { data } = await productRepository.read(ids);
         const validatedProducts = mergeArrays(products, data);
@@ -42,6 +43,7 @@ export class CreateOrderUseCase extends UseCase<Order | Order[]> {
             v4(),
             EOrderStatus.PENDING_PAYMENT,
             totalOrderValue,
+            new Date(),
             customerId
         );
 
@@ -60,6 +62,6 @@ export class CreateOrderUseCase extends UseCase<Order | Order[]> {
             })
         );
 
-        return this.repository.create(order);
+        return <Promise<IResponse<Order>>>this.repository.create(order);
     }
 }

@@ -4,12 +4,12 @@ import { IEntity } from "../../base/interfaces";
 
 export class Payment implements IEntity {
     id: string;
-    externalTransactionId: string | null;
+    externalTransactionId: string;
     status: EPaymentStatus;
 
-    constructor(externalId: string ){
-        this.id = v4()
-        this.externalTransactionId = null;
-        this.status = EPaymentStatus.PENDENTE;
+    constructor(id = v4(), externalId: string) {
+        this.id = id
+        this.externalTransactionId = externalId;
+        this.status = EPaymentStatus.PENDING;
     }
 }

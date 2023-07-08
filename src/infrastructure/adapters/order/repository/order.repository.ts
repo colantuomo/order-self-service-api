@@ -6,7 +6,7 @@ import { PromiseResponse } from '../../../../domain/base/types/promise-response.
 import { Order } from '../../../../domain/order/entity/order';
 import { OrderItem } from '../../../../domain/order/entity/order-item';
 import { prismaClient } from '../../../database/prisma';
-import { ETransactionStatus } from '../../../../domain/payment/entity/transaction-status.enum';
+import { EPaymentStatus } from '../../../../domain/payment/entity/payment-status.enum';
 
 export class OrderRepository implements IRepository<Order | Order[]> {
     async create(item: Order): PromiseResponse<Order | Order[]> {
@@ -34,12 +34,16 @@ export class OrderRepository implements IRepository<Order | Order[]> {
             payment: {
                 create: {
                     amount: item.totalValue,
-                    status: ETransactionStatus.PENDENTE
+                    status: EPaymentStatus.PENDING
                 }
             }
         };
 
-        let promise = prismaClient.order.create({ data: newOrder });
+        let promise = prismaClient.order.create({
+            data: newOrder, include: {
+                payment: true
+            }
+        });
         const order = await handleRepositoryError(promise);
         const { data } = new OrderResponse(order);
         return { data };
@@ -60,6 +64,7 @@ export class OrderRepository implements IRepository<Order | Order[]> {
                         quantity: true,
                     },
                 },
+                payment: true
             },
         });
         const order = await handleRepositoryError(promise);

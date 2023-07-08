@@ -1,23 +1,18 @@
-import { Payment } from "../../domain/payment/entity/payment";
 import { v4 } from "uuid";
-import { PaymentRepository } from "../adapters/payment/repository/payment.repository";
+import { IPaymentService } from "../../domain/base/interfaces/IPaymentService";
 
-export class MercadoPagoService {
-  paymentRepository: PaymentRepository;
+type Input = {
+  value: number
+}
 
-  constructor() {
-    this.paymentRepository = new PaymentRepository()
+export class MercadoPagoService implements IPaymentService<Promise<{ transactionId: string }>, Input> {
+
+  async submit(payload: Input) {
+    return { transactionId: v4() }
   }
 
-  async createTransaction(orderId: string, value: number) {
-    const externalOrderId = await this.sendPayment(value);
-
-  }
-
-  async sendPayment(value: number) {
-    // CALL Mercado Pago API
-
-    return v4();
+  async check(id: string) {
+    return { transactionId: v4() }
   }
 
 }

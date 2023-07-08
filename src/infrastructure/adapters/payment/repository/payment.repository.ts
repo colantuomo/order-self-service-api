@@ -14,8 +14,8 @@ export class PaymentRepository implements IRepository<Payment | Payment[]> {
 
 	}
 
-  	async create(item: Payment ): PromiseResponse<Payment | Payment[]> {
-    	throw new Error("Method not implemented.");
+	async create(item: Payment): PromiseResponse<Payment | Payment[]> {
+		throw new Error("Method not implemented.");
 	}
 
 	async read(...args: unknown[]): PromiseResponse<Payment | Payment[]> {
@@ -60,14 +60,9 @@ export class PaymentRepository implements IRepository<Payment | Payment[]> {
 		return { data }
 	}
 
-	updateItem(id: string, item: PaymentItem | PaymentItem[]): PromiseResponse<PaymentItem | PaymentItem[]>{
+	updateItem(id: string, item: PaymentItem | PaymentItem[]): PromiseResponse<PaymentItem | PaymentItem[]> {
 		throw new Error("Method not implemented.");
 	}
-/*
-	updateStatus(id: string, item: Payment): PromiseResponse<Payment>{
-		
-	}
-*/
 
 	delete(id: string): PromiseResponse<Payment | Payment[]> {
 		throw new Error("Method not implemented.");
