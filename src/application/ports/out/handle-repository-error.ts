@@ -1,6 +1,5 @@
 import { Prisma } from "@prisma/client";
 import { RepositoryException } from "../../../infrastructure/adapters/exceptions/repository.exception";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 export async function handleRepositoryError<T>(promise: Promise<T>) {
 	try {
@@ -14,7 +13,7 @@ export async function handleRepositoryError<T>(promise: Promise<T>) {
 					//TODO: find a way to retrieve correct status code;
 					throw new RepositoryException(e.meta?.cause as string);
 				default:
-					throw new RepositoryException(e as any);			
+					throw new RepositoryException(e as any);
 			}
 		}
 		throw new RepositoryException(e as any);

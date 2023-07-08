@@ -6,13 +6,25 @@ import { handleExpressControllerError } from '../../../../application/ports/out/
 import { GetOrdersCommand } from '../../../../application/order/commands/get-orders.command';
 import { GetOrdersUseCase } from '../../../../domain/order/use-cases/get-orders.use-case';
 import { ProductRepository } from '../../product/repository/product.repository';
+import { PaymentRepository } from '../../payment/repository/payment.repository';
+import { CreateTransactionUseCase } from '../../../../domain/payment/use-cases/create-transaction.use-case';
+import { MercadoPagoService } from '../../../services/mercado-pago.service';
+import { CreateTransactionCommand } from '../../../../application/payment/commands/create-transaction.command';
+import { Order } from '../../../../domain/order/entity/order';
+import { IResponse } from '../../../../domain/base/interfaces';
 export const routes = express.Router();
+
+
+const mercadoPagoService = new MercadoPagoService();
 
 const orderRepository = new OrderRepository();
 const productsRepository = new ProductRepository();
+const paymentRepository = new PaymentRepository();
 
 const createOrderUseCase = new CreateOrderUseCase(orderRepository);
 const getOrdersUseCase = new GetOrdersUseCase(orderRepository);
+const createTransactionUseCase = new CreateTransactionUseCase(paymentRepository, mercadoPagoService);
+
 
 routes.get('/', (request, response, next) => {
     const command: GetOrdersCommand = {};
@@ -48,7 +60,12 @@ routes.get('/customer/:customerId', (request, response, next) => {
  */
 routes.post('/', async (request, response, next) => {
     const command: CreateOrderCommand = request.body;
-    const promise = createOrderUseCase.handler(command, productsRepository);
+    const order = <IResponse<Order>>await createOrderUseCase.handler(command, productsRepository);
+    const createTransactionCommand: CreateTransactionCommand = {
+        paymentId: order.data?.payment?.id!,
+        value: order.data?.totalValue
+    };
+    const promise = createTransactionUseCase.handler(createTransactionCommand);
     return handleExpressControllerError(promise, response);
 });
 
