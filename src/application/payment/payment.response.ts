@@ -10,13 +10,15 @@ export class PaymentResponse implements IResponse<Payment | Payment[]> {
     public format(data: Payment | any) {
         if (Array.isArray(data)) {
             return data.map(
-                ({ orderId }) =>
-                    new Payment(orderId)
+                ({ id, externalPaymentId, status }) =>
+                    new Payment(id, externalPaymentId, status)
             );
         }
 
         return new Payment(
-            data.orderId
+            data.id,
+            data.externalPaymentId,
+            data.status,
         );
     }
     public get data() {

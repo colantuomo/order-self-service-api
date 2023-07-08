@@ -40,7 +40,7 @@ export class PaymentRepository implements IRepository<Payment | Payment[]> {
 		const promise = prismaClient.payment.update({
 			where: { id },
 			data: {
-				externalPaymentId: item.externalTransactionId
+				externalPaymentId: item.externalPaymentId
 			}
 		})
 		const payment = await handleRepositoryError(promise);
