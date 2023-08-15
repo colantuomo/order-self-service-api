@@ -44,20 +44,6 @@ routes.get('/customer/:customerId', (request, response, next) => {
     });
 });
 
-/**
- * @body
- * 	{
- *		"customer": "",
- *		"item": [
- *			{
- *				"product": "BIGMAC",
- *				"quantity": 1
- *        "value": 15
- *			}
- *		],
- *  	"payment": "PIX" | "DINHEIRO" | "CARTAO"
- *	}
- */
 routes.post('/', async (request, response, next) => {
     const command: CreateOrderCommand = request.body;
     const order = <IResponse<Order>>await createOrderUseCase.handler(command, productsRepository);
@@ -69,53 +55,25 @@ routes.post('/', async (request, response, next) => {
     return handleExpressControllerError(promise, response);
 });
 
-/**
- * @body {
- *		"item": [
- *  		{
- * 				"product": "l001",
- * 				"quantity": 1
- * 			}
- * 		]
- * 	}
- */
 routes.put('/:idOrder/item/add', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
     });
 });
 
-/**
- * @body {
- *		"item": [
- *  		{
- * 				"product": "",
- * 				"quantity": 0
- * 			}
- * 		]
- * 	}
- */
 routes.put('/:id/item/update', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
     });
 });
 
-/**
- * @body
- *  {
- *		"payment": "PIX" | "BOLETO" | "CARTAO"
- * 	}
- */
 routes.put('/:id/payment', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
     });
 });
 
-/**
- *
- */
+
 routes.delete('/:id', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
