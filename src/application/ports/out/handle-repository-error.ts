@@ -16,6 +16,5 @@ export async function handleRepositoryError<T>(promise: Promise<T>) {
 					throw new RepositoryException(e as any);
 			}
 		}
-		throw new RepositoryException(e as any);
 	}
 }

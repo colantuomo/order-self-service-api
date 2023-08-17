@@ -2,14 +2,13 @@ import { Prisma } from '@prisma/client';
 import { OrderResponse } from '../../../../application/order/order.response';
 import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 import { IRepository } from '../../../../domain/base/interfaces';
-import { PromiseResponse } from '../../../../domain/base/types/promise-response.type';
 import { Order } from '../../../../domain/order/entity/order';
-import { OrderItem } from '../../../../domain/order/entity/order-item';
 import { prismaClient } from '../../../database/prisma';
 import { EPaymentStatus } from '../../../../domain/payment/entity/payment-status.enum';
 
-export class OrderRepository implements IRepository<Order | Order[]> {
-    async create(item: Order): PromiseResponse<Order | Order[]> {
+export class OrderRepository implements IRepository<Order> {
+
+    async create(item: Order) {
         let customer = {};
         if (item.customerId) {
             customer = {
@@ -45,10 +44,10 @@ export class OrderRepository implements IRepository<Order | Order[]> {
             }
         });
         const order = await handleRepositoryError(promise);
-        const { data } = new OrderResponse(order);
-        return { data };
+        return OrderResponse.format(order as unknown as Order);
     }
-    async read(): PromiseResponse<Order | Order[]> {
+
+    async read() {
         const promise = prismaClient.order.findMany({
             include: {
                 customer: {
@@ -68,34 +67,40 @@ export class OrderRepository implements IRepository<Order | Order[]> {
             },
         });
         const order = await handleRepositoryError(promise);
-        const { data } = new OrderResponse(order);
-        return { data };
+        return OrderResponse.formatList(order as unknown as Order[]);
     }
 
-    async readById(id: string): PromiseResponse<Order | Order[]> {
+    async readById(id: string) {
         const promise = prismaClient.order.findUniqueOrThrow({
             where: { id },
         });
         const order = await handleRepositoryError(promise);
-        const { data } = new OrderResponse(order);
-        return { data };
+        return OrderResponse.format(order as Order);
     }
 
-    update(
+    async update(
         id: string,
-        item: Order | Order[]
-    ): PromiseResponse<Order | Order[]> {
-        throw new Error('Method not implemented.');
+        item: Order
+    ) {
+        const promise = prismaClient.order.update({
+            data: {
+                createdAt: item.createdAt,
+                id: item.id,
+                status: item.status,
+                totalValue: item.totalValue,
+                customerId: item.customerId
+            },
+            where: { id },
+        });
+        const order = await handleRepositoryError(promise);
+        return OrderResponse.format(order as Order);
     }
 
-    updateItem(
-        id: string,
-        item: OrderItem | OrderItem[]
-    ): PromiseResponse<OrderItem | OrderItem[]> {
-        throw new Error('Method not implemented.');
-    }
-
-    delete(id: string): PromiseResponse<Order | Order[]> {
-        throw new Error('Method not implemented.');
+    async delete(id: string) {
+        const promise = prismaClient.order.delete({
+            where: { id },
+        });
+        const order = await handleRepositoryError(promise);
+        return OrderResponse.format(order as Order);
     }
 }

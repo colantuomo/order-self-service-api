@@ -10,10 +10,8 @@ import { PaymentRepository } from '../../payment/repository/payment.repository';
 import { CreateTransactionUseCase } from '../../../../domain/payment/use-cases/create-transaction.use-case';
 import { MercadoPagoService } from '../../../services/mercado-pago.service';
 import { CreateTransactionCommand } from '../../../../application/payment/commands/create-transaction.command';
-import { Order } from '../../../../domain/order/entity/order';
-import { IResponse } from '../../../../domain/base/interfaces';
-export const routes = express.Router();
 
+export const routes = express.Router();
 
 const mercadoPagoService = new MercadoPagoService();
 
@@ -46,10 +44,10 @@ routes.get('/customer/:customerId', (request, response, next) => {
 
 routes.post('/', async (request, response, next) => {
     const command: CreateOrderCommand = request.body;
-    const order = <IResponse<Order>>await createOrderUseCase.handler(command, productsRepository);
+    const order = await createOrderUseCase.handler(command, productsRepository);
     const createTransactionCommand: CreateTransactionCommand = {
-        paymentId: order.data?.payment?.id!,
-        value: order.data?.totalValue
+        paymentId: order?.payment?.id!,
+        value: order?.totalValue
     };
     const promise = createTransactionUseCase.handler(createTransactionCommand);
     return handleExpressControllerError(promise, response);

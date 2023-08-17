@@ -4,7 +4,7 @@ import { ProductCategory } from '../../value-objects/product-category.value-obje
 import { Product } from '../entity/product';
 import { UnknownCategoryError } from '../exceptions/unknown-category.exception';
 
-export class CreateProductUseCase extends UseCase<Product | Product[]> {
+export class CreateProductUseCase extends UseCase<Product> {
   async handler({ name, price, category }: CreateProductCommand) {
     const productCategory = new ProductCategory(category);
     if (productCategory.isInvalid()) {

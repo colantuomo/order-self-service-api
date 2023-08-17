@@ -1,5 +1,4 @@
 import { ICommand, IRepository } from './interfaces';
-import { PromiseResponse } from './types/promise-response.type';
 
 export abstract class UseCaseWithService<T, S, R = IRepository<T>> {
 	private _repository: R;
@@ -12,7 +11,7 @@ export abstract class UseCaseWithService<T, S, R = IRepository<T>> {
 	abstract handler(
 		command: ICommand,
 		aggregateRepository?: IRepository<any>,
-	): PromiseResponse<T>;
+	): Promise<T>;
 
 	public get repository(): R {
 		return this._repository;

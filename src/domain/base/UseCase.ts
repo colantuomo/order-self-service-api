@@ -1,5 +1,4 @@
-import { ICommand, IRepository, IResponse } from './interfaces';
-import { PromiseResponse } from './types/promise-response.type';
+import { ICommand, IRepository } from './interfaces';
 
 export abstract class UseCase<T, R = IRepository<T>> {
     private _repository: R;
@@ -9,8 +8,8 @@ export abstract class UseCase<T, R = IRepository<T>> {
 
     abstract handler(
         command: ICommand,
-        aggregateRepository?: IRepository<any>
-    ): PromiseResponse<T>;
+        ...args: any
+    ): Promise<T | T[]>;
 
     public get repository(): R {
         return this._repository;

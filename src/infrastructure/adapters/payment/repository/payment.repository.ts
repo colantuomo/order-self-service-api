@@ -2,41 +2,43 @@ import { prismaClient } from '../../../database/prisma';
 import { IRepository } from '../../../../domain/base/interfaces/IRepository';
 import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 import { Payment } from '../../../../domain/payment/entity/payment';
-import { PromiseResponse } from '../../../../domain/base/types/promise-response.type';
 import { PaymentResponse } from '../../../../application/payment/payment.response';
+import { EPaymentStatus } from '../../../../domain/payment/entity/payment-status.enum';
 
-export class PaymentRepository implements IRepository<Payment | Payment[]> {
-	constructor() {
+export class PaymentRepository implements IRepository<Payment> {
 
+	async create(item: Payment) {
+		const promise = prismaClient.payment.create({
+			data: {
+				amount: 0, //TODO: Remove that amount from prisma schema
+				status: item.status as string,
+				externalPaymentId: item.externalPaymentId,
+				order: {
+					connect: {
+						id: item.orderId,
+					}
+				}
+			}
+		});
+		const payment = await handleRepositoryError(promise)
+		return PaymentResponse.format(payment as unknown as Payment);
 	}
 
-	updateExternalPaymentId(paymentId: string, externalPaymentId: string) {
-
-	}
-
-	async create(item: Payment): PromiseResponse<Payment | Payment[]> {
-		throw new Error("Method not implemented.");
-	}
-
-	async read(...args: unknown[]): PromiseResponse<Payment | Payment[]> {
+	async read() {
 		const promise = prismaClient.payment.findMany();
 		const payment = await handleRepositoryError(promise)
-		const { data } = new PaymentResponse(payment);
-
-		return { data };
+		return PaymentResponse.formatList(payment as unknown as Payment[]);
 	}
 
-	async readById(id: string): PromiseResponse<Payment | Payment[]> {
+	async readById(id: string) {
 		const promise = prismaClient.payment.findUniqueOrThrow({
 			where: { id },
 		});
 		const payment = await handleRepositoryError(promise)
-		const { data } = new PaymentResponse(payment);
-
-		return { data };
+		return PaymentResponse.format(payment as unknown as Payment);
 	}
 
-	async update(id: string, item: Payment): PromiseResponse<Payment | Payment[]> {
+	async update(id: string, item: Payment) {
 		const promise = prismaClient.payment.update({
 			where: { id },
 			data: {
@@ -44,27 +46,25 @@ export class PaymentRepository implements IRepository<Payment | Payment[]> {
 			}
 		})
 		const payment = await handleRepositoryError(promise);
-		const { data } = new PaymentResponse(payment);
-		return { data }
+		return PaymentResponse.format(payment as unknown as Payment);
 	}
 
-	async updateStatus(id: string, item: Payment): PromiseResponse<Payment | Payment[]> {
+	async updateStatus(id: string, status: EPaymentStatus) {
 		const promise = prismaClient.payment.update({
 			where: { id },
 			data: {
-				status: item.status
+				status: status
 			}
 		})
 		const payment = await handleRepositoryError(promise);
-		const { data } = new PaymentResponse(payment);
-		return { data }
+		return PaymentResponse.format(payment as unknown as Payment);
 	}
 
-	updateItem(id: string, item: PaymentItem | PaymentItem[]): PromiseResponse<PaymentItem | PaymentItem[]> {
-		throw new Error("Method not implemented.");
-	}
-
-	delete(id: string): PromiseResponse<Payment | Payment[]> {
-		throw new Error("Method not implemented.");
+	async delete(id: string) {
+		const promise = prismaClient.payment.delete({
+			where: { id },
+		})
+		const payment = await handleRepositoryError(promise);
+		return PaymentResponse.format(payment as unknown as Payment);
 	}
 }
