@@ -46,6 +46,7 @@ routes.post('/', async (request, response, next) => {
     const command: CreateOrderCommand = request.body;
     const order = await createOrderUseCase.handler(command, productsRepository);
     const createTransactionCommand: CreateTransactionCommand = {
+        orderId: order.id,
         paymentId: order?.payment?.id!,
         value: order?.totalValue
     };
