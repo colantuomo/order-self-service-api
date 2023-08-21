@@ -6,7 +6,7 @@ import { handleRepositoryError } from '../../../../application/ports/out/handle-
 import { ProductCategories } from '../../../../domain/product/enums';
 import { RepositoryException } from '../../exceptions/repository.exception';
 
-export class ProductRepository implements IRepository<Product | Product[]> {
+export class ProductRepository implements IRepository<Product> {
     async create({ name, price, category, description }: Product) {
         const promise = prismaClient.product.create({
             data: {
@@ -17,21 +17,19 @@ export class ProductRepository implements IRepository<Product | Product[]> {
             },
         });
         const product = await handleRepositoryError(promise);
-        const { data } = new ProductResponse(product);
-        return { data };
+        return ProductResponse.format(product as unknown as Product);
     }
 
-    async read(ids?: string[]): Promise<{ data: Product[] }> {
+    async read(ids?: string[]) {
         const where = {
             id: { in: ids },
         };
         const promise = prismaClient.product.findMany({ where });
         const products = await handleRepositoryError(promise);
-        if (ids?.length && !products.length) {
+        if (ids?.length && !products?.length) {
             throw new RepositoryException('Products not founded', 404);
         }
-        const { data } = new ProductResponse(products) as { data: Product[] };
-        return { data };
+        return ProductResponse.formatList(products as unknown as Product[]);
     }
 
     async readById(id: string) {
@@ -39,8 +37,7 @@ export class ProductRepository implements IRepository<Product | Product[]> {
             where: { id },
         });
         const product = await handleRepositoryError(promise);
-        const { data } = new ProductResponse(product);
-        return { data };
+        return ProductResponse.format(product as unknown as Product);
     }
 
     async readByCategory(category: ProductCategories) {
@@ -48,8 +45,7 @@ export class ProductRepository implements IRepository<Product | Product[]> {
             where: { category },
         });
         const product = await handleRepositoryError(promise);
-        const { data } = new ProductResponse(product);
-        return { data };
+        return ProductResponse.format(product as unknown as Product);
     }
 
     async update(id: string, { name, price, description }: Product) {
@@ -62,14 +58,14 @@ export class ProductRepository implements IRepository<Product | Product[]> {
             },
         });
         const product = await handleRepositoryError(promise);
-        const { data } = new ProductResponse(product);
-        return { data };
+        return ProductResponse.format(product as unknown as Product);
     }
+
     async delete(id: string) {
         const promise = prismaClient.product.delete({
             where: { id },
         });
-        await handleRepositoryError(promise);
-        return { data: null };
+        const product = await handleRepositoryError(promise);
+        return ProductResponse.format(product as unknown as Product);
     }
 }

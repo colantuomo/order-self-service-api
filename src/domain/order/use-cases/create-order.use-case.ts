@@ -1,13 +1,11 @@
 import { v4 } from 'uuid';
 import { CreateOrderCommand } from '../../../application/order/commands/create-order.command';
 import { UseCase } from '../../base/UseCase';
-import { PromiseResponse } from '../../base/types/promise-response.type';
 import { Order } from '../entity/order';
 import { EOrderStatus } from '../entity/order-status.enum';
 import { Product } from '../../product/entity/product';
 import { OrderItem } from '../entity/order-item';
 import { ProductRepository } from '../../../infrastructure/adapters/product/repository/product.repository';
-import { IResponse } from '../../base/interfaces';
 
 function mergeArrays(inputProducts: any[], validatedProducts: Product[]) {
     return validatedProducts.map((item1) => {
@@ -18,13 +16,13 @@ function mergeArrays(inputProducts: any[], validatedProducts: Product[]) {
     });
 }
 
-export class CreateOrderUseCase extends UseCase<Order | Order[]> {
+export class CreateOrderUseCase extends UseCase<Order> {
     async handler(
         { products, customerId }: CreateOrderCommand,
         productRepository: ProductRepository
-    ): PromiseResponse<Order> {
+    ) {
         const ids = products.map(({ id }) => id);
-        const { data } = await productRepository.read(ids);
+        const data = await productRepository.read(ids);
         const validatedProducts = mergeArrays(products, data);
 
         let totalOrderValue = 0;
@@ -62,6 +60,6 @@ export class CreateOrderUseCase extends UseCase<Order | Order[]> {
             })
         );
 
-        return <Promise<IResponse<Order>>>this.repository.create(order);
+        return this.repository.create(order);
     }
 }

@@ -6,10 +6,12 @@ export class Payment implements IEntity {
     id: string;
     externalPaymentId: string;
     status: EPaymentStatus;
+    orderId: string;
 
-    constructor(id = v4(), externalId: string, status: EPaymentStatus) {
+    constructor(orderId: string, externalId: string, id = v4(), status: EPaymentStatus = EPaymentStatus.PENDING) {
         this.id = id
         this.externalPaymentId = externalId;
         this.status = status;
+        this.orderId = orderId;
     }
 }

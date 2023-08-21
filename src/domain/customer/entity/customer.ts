@@ -7,15 +7,15 @@ export class Customer implements IEntity {
     name: string;
     email: string;
     cpf: Cpf;
-  
-    constructor(id: string, name: string, email: string, cpf: Cpf) {
-        this.id = id;   
+
+    constructor(name: string, email: string, cpf: Cpf, id: string = v4()) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.cpf = cpf;
     }
 
-    isInvalid(){
+    isInvalid() {
         return this.cpf.isInvalid()
     }
 }

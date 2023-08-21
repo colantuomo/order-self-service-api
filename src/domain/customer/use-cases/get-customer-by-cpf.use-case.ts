@@ -1,11 +1,10 @@
 import { UseCase } from "../../base/UseCase";
-import { PromiseResponse } from "../../base/types/promise-response.type";
 import { Customer } from "../entity/customer";
 import { ReadCustomerByCPFCommand } from "../../../application/customer/commands/read-customer-by-cpf.command";
 import { CustomerRepository } from "../../../infrastructure/adapters/customer/repository/customer.repository";
 
-export class GetCustomerByCPFUseCase extends UseCase<Customer | Customer[], CustomerRepository>   {
-    handler(command: ReadCustomerByCPFCommand): PromiseResponse<Customer | Customer[]> {
+export class GetCustomerByCPFUseCase extends UseCase<Customer, CustomerRepository>   {
+    handler(command: ReadCustomerByCPFCommand) {
         return this.repository.readByCPF(command.cpf);
     }
 }

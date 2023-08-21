@@ -5,8 +5,6 @@ import { UpdatePaymentUseCase } from '../../../../domain/payment/use-cases/updat
 import { handleExpressControllerError } from '../../../../application/ports/out/handle-controller-error';
 
 export const routes = Router();
-//GetTransaction
-//PutUpdate 
 
 const repository = new PaymentRepository();
 const updatePaymentUseCase = new UpdatePaymentUseCase(repository);

@@ -10,10 +10,8 @@ import { PaymentRepository } from '../../payment/repository/payment.repository';
 import { CreateTransactionUseCase } from '../../../../domain/payment/use-cases/create-transaction.use-case';
 import { MercadoPagoService } from '../../../services/mercado-pago.service';
 import { CreateTransactionCommand } from '../../../../application/payment/commands/create-transaction.command';
-import { Order } from '../../../../domain/order/entity/order';
-import { IResponse } from '../../../../domain/base/interfaces';
-export const routes = express.Router();
 
+export const routes = express.Router();
 
 const mercadoPagoService = new MercadoPagoService();
 
@@ -44,78 +42,37 @@ routes.get('/customer/:customerId', (request, response, next) => {
     });
 });
 
-/**
- * @body
- * 	{
- *		"customer": "",
- *		"item": [
- *			{
- *				"product": "BIGMAC",
- *				"quantity": 1
- *        "value": 15
- *			}
- *		],
- *  	"payment": "PIX" | "DINHEIRO" | "CARTAO"
- *	}
- */
 routes.post('/', async (request, response, next) => {
     const command: CreateOrderCommand = request.body;
-    const order = <IResponse<Order>>await createOrderUseCase.handler(command, productsRepository);
+    const order = await createOrderUseCase.handler(command, productsRepository);
     const createTransactionCommand: CreateTransactionCommand = {
-        paymentId: order.data?.payment?.id!,
-        value: order.data?.totalValue
+        orderId: order.id,
+        paymentId: order?.payment?.id!,
+        value: order?.totalValue
     };
     const promise = createTransactionUseCase.handler(createTransactionCommand);
     return handleExpressControllerError(promise, response);
 });
 
-/**
- * @body {
- *		"item": [
- *  		{
- * 				"product": "l001",
- * 				"quantity": 1
- * 			}
- * 		]
- * 	}
- */
 routes.put('/:idOrder/item/add', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
     });
 });
 
-/**
- * @body {
- *		"item": [
- *  		{
- * 				"product": "",
- * 				"quantity": 0
- * 			}
- * 		]
- * 	}
- */
 routes.put('/:id/item/update', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
     });
 });
 
-/**
- * @body
- *  {
- *		"payment": "PIX" | "BOLETO" | "CARTAO"
- * 	}
- */
 routes.put('/:id/payment', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
     });
 });
 
-/**
- *
- */
+
 routes.delete('/:id', (request, response, next) => {
     return response.status(200).json({
         status: 'PUT Orders /',
