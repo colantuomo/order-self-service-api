@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { OrderStatus, Prisma } from '@prisma/client';
 import { OrderResponse } from '../../../../application/order/order.response';
 import { handleRepositoryError } from '../../../../application/ports/out/handle-repository-error';
 import { IRepository } from '../../../../domain/base/interfaces';
@@ -18,10 +18,10 @@ export class OrderRepository implements IRepository<Order> {
             };
         }
 
-        let newOrder: Prisma.OrderCreateInput = {
+        const newOrder: Prisma.OrderCreateInput = {
             id: item.id,
             createdAt: item.createdAt,
-            status: item.status,
+            status: item.status as OrderStatus,
             totalValue: item.totalValue,
             customer,
             items: {
@@ -38,7 +38,7 @@ export class OrderRepository implements IRepository<Order> {
             }
         };
 
-        let promise = prismaClient.order.create({
+        const promise = prismaClient.order.create({
             data: newOrder, include: {
                 payment: true
             }
@@ -86,7 +86,7 @@ export class OrderRepository implements IRepository<Order> {
             data: {
                 createdAt: item.createdAt,
                 id: item.id,
-                status: item.status,
+                status: item.status as OrderStatus,
                 totalValue: item.totalValue,
                 customerId: item.customerId
             },

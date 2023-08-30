@@ -9,9 +9,16 @@ datasource db {
 }
 
 enum OrderStatus {
-    PENDING_PAYMENT
+    RECEIVED
     IN_PREPARATION
     DONE
+    READY
+}
+
+enum PaymentStatus {
+    PENDING
+    PAID
+    CANCELED
 }
 
 model Order {
@@ -65,7 +72,7 @@ model Payment {
     order             Order     @relation(fields: [orderId], references: [id])
     orderId           String    @unique
     amount            Float
-    status            String
+    status            PaymentStatus
     externalPaymentId String?
     updatedAt         DateTime? @updatedAt
 

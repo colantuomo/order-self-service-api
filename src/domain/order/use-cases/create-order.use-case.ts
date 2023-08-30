@@ -39,7 +39,7 @@ export class CreateOrderUseCase extends UseCase<Order> {
 
         const order = new Order(
             v4(),
-            EOrderStatus.PENDING_PAYMENT,
+            EOrderStatus.RECEIVED,
             totalOrderValue,
             new Date(),
             customerId
