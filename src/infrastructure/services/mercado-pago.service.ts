@@ -1,18 +1,25 @@
-import { v4 } from "uuid";
+import axios from "axios";
 import { IPaymentService } from "../../domain/base/interfaces/IPaymentService";
+import { MercadoPagoCreatePaymentBody, MercadoPagoCreatePaymentResponse, MercadoPagoPaymentResponse } from "./interfaces/mercado-pago";
 
-type Input = {
-  value: number
+function http() {
+  return axios.create(
+    { baseURL: process.env.MERCADO_PAGO_BASE_URL }
+  );
 }
 
-export class MercadoPagoService implements IPaymentService<Promise<{ transactionId: string }>, Input> {
+export class MercadoPagoService implements IPaymentService {
 
-  async submit(payload: Input) {
-    return { transactionId: v4() }
+  async read(id: string): Promise<MercadoPagoPaymentResponse> {
+    const { data } = await http().get(`/v1/payments/${id}`);
+    return data;
   }
 
-  async check(id: string) {
-    return { transactionId: v4() }
+  async create(body: MercadoPagoCreatePaymentBody): Promise<MercadoPagoCreatePaymentResponse> {
+    const { data } = await http().post(`/v1/payments`, {
+      body
+    });
+    return data;
   }
 
 }

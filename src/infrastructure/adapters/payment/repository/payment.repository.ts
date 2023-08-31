@@ -49,9 +49,15 @@ export class PaymentRepository implements IRepository<Payment> {
 		return PaymentResponse.format(payment as unknown as Payment);
 	}
 
-	async updateStatus(id: string, status: EPaymentStatus) {
+	async updateStatusByExternalID(externalPaymentId: string, status: EPaymentStatus) {
+		const paymentByExternalIDPromise = prismaClient.payment.findFirstOrThrow({
+			where: {
+				externalPaymentId,
+			}
+		});
+		const paymentByExternalID = await handleRepositoryError(paymentByExternalIDPromise);
 		const promise = prismaClient.payment.update({
-			where: { id },
+			where: { id: paymentByExternalID?.id },
 			data: {
 				status: status
 			}
@@ -65,6 +71,16 @@ export class PaymentRepository implements IRepository<Payment> {
 			where: { id },
 		})
 		const payment = await handleRepositoryError(promise);
+		return PaymentResponse.format(payment as unknown as Payment);
+	}
+
+	async readOrderPaymentStatus(orderId: string) {
+		const promise = prismaClient.payment.findUnique({
+			where: {
+				orderId
+			}
+		});
+		const payment = await handleRepositoryError(promise)
 		return PaymentResponse.format(payment as unknown as Payment);
 	}
 }
