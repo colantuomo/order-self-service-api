@@ -4,6 +4,7 @@ import { handleRepositoryError } from '../../../../application/ports/out/handle-
 import { Payment } from '../../../../domain/payment/entity/payment';
 import { PaymentResponse } from '../../../../application/payment/payment.response';
 import { EPaymentStatus } from '../../../../domain/payment/entity/payment-status.enum';
+import { PaymentStatus } from '@prisma/client';
 
 export class PaymentRepository implements IRepository<Payment> {
 
@@ -11,7 +12,7 @@ export class PaymentRepository implements IRepository<Payment> {
 		const promise = prismaClient.payment.create({
 			data: {
 				amount: 0, //TODO: Remove that amount from prisma schema
-				status: item.status as string,
+				status: item.status as PaymentStatus,
 				externalPaymentId: item.externalPaymentId,
 				order: {
 					connect: {
@@ -49,9 +50,15 @@ export class PaymentRepository implements IRepository<Payment> {
 		return PaymentResponse.format(payment as unknown as Payment);
 	}
 
-	async updateStatus(id: string, status: EPaymentStatus) {
+	async updateStatusByExternalID(externalPaymentId: number, status: EPaymentStatus) {
+		const paymentByExternalIDPromise = prismaClient.payment.findFirstOrThrow({
+			where: {
+				externalPaymentId,
+			}
+		});
+		const paymentByExternalID = await handleRepositoryError(paymentByExternalIDPromise);
 		const promise = prismaClient.payment.update({
-			where: { id },
+			where: { id: paymentByExternalID?.id },
 			data: {
 				status: status
 			}
@@ -65,6 +72,27 @@ export class PaymentRepository implements IRepository<Payment> {
 			where: { id },
 		})
 		const payment = await handleRepositoryError(promise);
+		return PaymentResponse.format(payment as unknown as Payment);
+	}
+
+	async readOrderPaymentStatus(orderId: string) {
+		const promise = prismaClient.payment.findUniqueOrThrow({
+			where: {
+				orderId
+			}
+		});
+		const payment = await handleRepositoryError(promise)
+		return PaymentResponse.format(payment as unknown as Payment);
+	}
+
+	async readExternalPaymentInfo(id: string, externalPaymentId: number) {
+		const promise = prismaClient.payment.findFirstOrThrow({
+			where: {
+				id,
+				externalPaymentId
+			}
+		});
+		const payment = await handleRepositoryError(promise)
 		return PaymentResponse.format(payment as unknown as Payment);
 	}
 }

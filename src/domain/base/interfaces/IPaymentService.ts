@@ -1,4 +1,4 @@
-export interface IPaymentService<T, R = any> {
-	submit( payload: R ): T;
-	check( id: string ): T; 
+export interface IPaymentService<T = any> {
+	create(...props: any): Promise<T>;
+	read(id: number | string): Promise<T>
 }

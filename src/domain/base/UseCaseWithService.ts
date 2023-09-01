@@ -1,9 +1,9 @@
 import { ICommand, IRepository } from './interfaces';
 
 export abstract class UseCaseWithService<T, S, R = IRepository<T>> {
-	private _repository: R;
-	private _service: S;
-	constructor(repository: R, service: S) {
+	private _repository?: R;
+	private _service?: S;
+	constructor(repository?: R, service?: S) {
 		this._repository = repository;
 		this._service = service;
 	}
@@ -13,11 +13,11 @@ export abstract class UseCaseWithService<T, S, R = IRepository<T>> {
 		aggregateRepository?: IRepository<any>,
 	): Promise<T>;
 
-	public get repository(): R {
+	public get repository(): R | undefined {
 		return this._repository;
 	}
 
-	public get service(): S {
+	public get service(): S | undefined {
 		return this._service;
 	}
 }

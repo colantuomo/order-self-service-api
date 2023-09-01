@@ -73,7 +73,7 @@ model Payment {
     orderId           String    @unique
     amount            Float
     status            PaymentStatus
-    externalPaymentId String?
+    externalPaymentId Int?
     updatedAt         DateTime? @updatedAt
 
     @@map("payments")

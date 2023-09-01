@@ -9,5 +9,4 @@ export class UpdateStatusOrderUseCase extends UseCase<Order> {
     order.status = status;
     return this.repository.update(id, order);
   }
-
 }

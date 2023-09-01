@@ -127,18 +127,53 @@ curl --location --request DELETE 'http://localhost:8080/api/products/48a57c23-b5
 ```cURL
 curl --location 'http://localhost:8080/api/product/category/FOOD'
 ```
-- Fake Checkout - Enviar pedidos para a fila
+- Pegar status de pagamento de um pedido
 ```cURL
-curl --location --request PUT 'http://localhost:8080/api/payments/1b3140cb-1a77-484c-9bab-c0cbc0f33d5c/checkout' \
---header 'Content-Type: application/json' \
---data '{
-    "status": "PAID"
-}'
+curl --location 'http://localhost:8080/api/payments/order/258da063-caf2-40c3-8c25-ffcbcb554492'
 ```
 - Listar todos os pedidos
 ```cURL
 curl --location 'http://localhost:8080/api/orders'
 ```
+- Endpoint para o Webhook do Mercado Pago
+```
+curl --location 'http://localhost:8080/api/payments/webhook/mercadopago' \
+--header 'Content-Type: application/json' \
+--data '{
+    "data": {
+        "id": 1317578927
+    }
+}'
+```
+- Atualizar Status de um pedido
+```
+curl --location --request PUT 'http://localhost:8080/api/orders/764697de-5c81-437f-8f9b-05394f440bb4/status' \
+--header 'Content-Type: application/json' \
+--data '{
+    "status": "READY"
+}'
+```
+- Criar um pedido (e tambem um pedido de pagamento ja integrando com o mercado pago)
+```
+curl --location 'http://localhost:8080/api/orders' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "customerId": "688dac4f-4781-4ccd-a9cf-74b527eeb91b",
+    "products": [
+        {
+            "id": "4f197bd9-d329-4558-9a39-71f53c0df64e",
+            "quantity": 5
+        }
+    ],
+    "description": "Order payment",
+    "installments": 1,
+    "payer": {
+        "email": "pcolantuomo@outlook.com"
+    },
+    "paymentMethodId": "pix"
+}'
+```
+
 
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)

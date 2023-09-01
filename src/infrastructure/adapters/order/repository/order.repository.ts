@@ -65,6 +65,14 @@ export class OrderRepository implements IRepository<Order> {
                 },
                 payment: true
             },
+            where: {
+                status: {
+                    not: 'DONE'
+                }
+            },
+            orderBy: {
+                status: 'desc'
+            }
         });
         const order = await handleRepositoryError(promise);
         return OrderResponse.formatList(order as unknown as Order[]);

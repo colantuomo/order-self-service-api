@@ -10,6 +10,9 @@ import { PaymentRepository } from '../../payment/repository/payment.repository';
 import { CreateTransactionUseCase } from '../../../../domain/payment/use-cases/create-transaction.use-case';
 import { MercadoPagoService } from '../../../services/mercado-pago.service';
 import { CreateTransactionCommand } from '../../../../application/payment/commands/create-transaction.command';
+import { UpdateStatusOrderUseCase } from '../../../../domain/order/use-cases/update-status-order.use-case';
+import { UpdateOrderStatusCommand } from '../../../../application/order/commands/update-order-status.command';
+import { ReadOrderPaymentInfoUseCase } from '../../../../domain/order-payment/use-cases/read-order-payment-info.use-case';
 
 export const routes = express.Router();
 
@@ -22,6 +25,8 @@ const paymentRepository = new PaymentRepository();
 const createOrderUseCase = new CreateOrderUseCase(orderRepository);
 const getOrdersUseCase = new GetOrdersUseCase(orderRepository);
 const createTransactionUseCase = new CreateTransactionUseCase(paymentRepository, mercadoPagoService);
+const updateStatusOrderUseCase = new UpdateStatusOrderUseCase(orderRepository);
+const readOrderPaymentInfoUseCase = new ReadOrderPaymentInfoUseCase(undefined, mercadoPagoService);
 
 
 routes.get('/', (request, response, next) => {
@@ -30,53 +35,32 @@ routes.get('/', (request, response, next) => {
     return handleExpressControllerError(promise, response);
 });
 
-routes.get('/:id', (request, response, next) => {
-    return response.status(200).json({
-        status: 'GET Orders /:id',
-    });
-});
-
-routes.get('/customer/:customerId', (request, response, next) => {
-    return response.status(200).json({
-        status: 'GET customer/:customerId',
-    });
-});
-
 routes.post('/', async (request, response, next) => {
     const command: CreateOrderCommand = request.body;
     const order = await createOrderUseCase.handler(command, productsRepository);
     const createTransactionCommand: CreateTransactionCommand = {
         orderId: order.id,
         paymentId: order?.payment?.id!,
-        value: order?.totalValue
+        transactionAmount: order?.totalValue,
+        description: request.body.description,
+        installments: request.body.installments,
+        payer: {
+            email: request.body.payer.email,
+        },
+        paymentMethodId: request.body.paymentMethodId
     };
-    const promise = createTransactionUseCase.handler(createTransactionCommand);
+    const payment = await createTransactionUseCase.handler(createTransactionCommand);
+    const promise = readOrderPaymentInfoUseCase.handler({ orderId: order.id, paymentId: payment.id, externalPaymentId: payment.externalPaymentId });
     return handleExpressControllerError(promise, response);
 });
 
-routes.put('/:idOrder/item/add', (request, response, next) => {
-    return response.status(200).json({
-        status: 'PUT Orders /',
-    });
-});
-
-routes.put('/:id/item/update', (request, response, next) => {
-    return response.status(200).json({
-        status: 'PUT Orders /',
-    });
-});
-
-routes.put('/:id/payment', (request, response, next) => {
-    return response.status(200).json({
-        status: 'PUT Orders /',
-    });
-});
-
-
-routes.delete('/:id', (request, response, next) => {
-    return response.status(200).json({
-        status: 'PUT Orders /',
-    });
+routes.put('/:id/status', (request, response, next) => {
+    const command: UpdateOrderStatusCommand = {
+        id: request.params.id,
+        status: request.body.status
+    }
+    const promise = updateStatusOrderUseCase.handler(command);
+    return handleExpressControllerError(promise, response);
 });
 
 export const orderRoutes = routes;
