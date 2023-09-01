@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Nuggets\",\n    \"category\": \"SIDE_DISH\",\n    \"price\": 3\n}",
+							"raw": "{\n    \"name\": \"Big Mac\",\n    \"category\": \"FOOD\",\n    \"price\": 15\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,7 +62,7 @@
 					"response": []
 				},
 				{
-					"name": "Read",
+					"name": "Read All",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -200,7 +200,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Willian\",\r\n    \"cpf\": \"38257207802\",\r\n    \"email\": \"will@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Paulo\",\r\n    \"cpf\": \"38257207802\",\r\n    \"email\": \"paulo@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -239,7 +239,7 @@
 							"variable": [
 								{
 									"key": "cpf",
-									"value": "38267498709"
+									"value": "38257207802"
 								}
 							]
 						}
@@ -276,7 +276,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"7523b8dc-ff27-4a38-b3d5-0346b2ae25a5\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"86ff4332-54b7-4d8b-a1ba-d4928ec7a700\",\r\n            \"quantity\": 5\r\n        },\r\n        {\r\n            \"id\":\"c638d697-ef31-42fe-9d59-fd0ea443a1aa\",\r\n            \"quantity\": 1\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"customerId\": \"688dac4f-4781-4ccd-a9cf-74b527eeb91b\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"4f197bd9-d329-4558-9a39-71f53c0df64e\",\r\n            \"quantity\": 5\r\n        }\r\n    ],\r\n    \"description\": \"Order payment\",\r\n    \"installments\": 1,\r\n    \"payer\": {\r\n        \"email\": \"pcolantuomo@outlook.com\"\r\n    },\r\n    \"paymentMethodId\": \"pix\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -313,20 +313,15 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Payment",
-			"item": [
+				},
 				{
-					"name": "Update Payment Status",
+					"name": "Update order Status",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"PAID\"\r\n}",
+							"raw": "{\r\n    \"status\": \"READY\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -334,21 +329,81 @@
 							}
 						},
 						"url": {
-							"raw": "{{self_service_order_host}}/api/payments/:id/checkout",
+							"raw": "{{self_service_order_host}}/api/orders/:id/status",
+							"host": [
+								"{{self_service_order_host}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								":id",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "764697de-5c81-437f-8f9b-05394f440bb4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Get Order Payment Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{self_service_order_host}}/api/payments/order/:id",
 							"host": [
 								"{{self_service_order_host}}"
 							],
 							"path": [
 								"api",
 								"payments",
-								":id",
-								"checkout"
+								"order",
+								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "1b3140cb-1a77-484c-9bab-c0cbc0f33d5c"
+									"value": "258da063-caf2-40c3-8c25-ffcbcb554492"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook - Mercado Pago",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"id\": 1317578927\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{self_service_order_host}}/api/payments/webhook/mercadopago",
+							"host": [
+								"{{self_service_order_host}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"webhook",
+								"mercadopago"
 							]
 						}
 					},
