@@ -4,22 +4,30 @@ import { MercadoPagoCreatePaymentBody, MercadoPagoCreatePaymentResponse, Mercado
 
 function http() {
   return axios.create(
-    { baseURL: process.env.MERCADO_PAGO_BASE_URL }
+    {
+      baseURL: process.env.MERCADO_PAGO_BASE_URL, headers: {
+        'Authorization': `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`
+      }
+    }
   );
 }
 
 export class MercadoPagoService implements IPaymentService {
 
-  async read(id: string): Promise<MercadoPagoPaymentResponse> {
+  async read(id: number): Promise<MercadoPagoPaymentResponse> {
     const { data } = await http().get(`/v1/payments/${id}`);
     return data;
   }
 
   async create(body: MercadoPagoCreatePaymentBody): Promise<MercadoPagoCreatePaymentResponse> {
-    const { data } = await http().post(`/v1/payments`, {
-      body
-    });
-    return data;
+    try {
+      const { data } = await http().post(`/v1/payments`, {
+        ...body
+      });
+      return data;
+    } catch (error) {
+      throw (error);
+    }
   }
 
 }

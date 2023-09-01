@@ -18,7 +18,7 @@ export class UpdatePaymentStatusUseCase extends UseCase<Payment | Order, Payment
     switch (status) {
       case 'approved':
         paymentStatus = EPaymentStatus.PAID;
-        orderStatus = EOrderStatus.READY;
+        orderStatus = EOrderStatus.IN_PREPARATION;
         break;
       case 'rejected':
         paymentStatus = EPaymentStatus.CANCELED;
