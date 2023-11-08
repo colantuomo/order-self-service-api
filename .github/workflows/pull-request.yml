@@ -6,10 +6,6 @@ jobs:
   api:
     name: API
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: api
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
