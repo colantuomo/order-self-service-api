@@ -1,6 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import { routes } from './adapters/index.routes';
+import { authWithJWT } from './middlewares/auth.middleware';
 
 
 const app = express();
@@ -11,6 +12,7 @@ app.get('/health', async (req, res, next) => {
     status: 'API Up and running',
   });
 });
+app.use(authWithJWT)
 app.use('/api', routes);
 
 export { app };
