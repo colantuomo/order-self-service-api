@@ -9,6 +9,7 @@ COPY package.json package-lock.json ./
 
 # Install dependencies using npm
 RUN npm install --omit=dev
+ENV DATABASE_URL postgresql://postgres:postgres@database:5432/fiap?schema=public
 
 # Copy the rest of the application code to the working directory
 COPY . .
