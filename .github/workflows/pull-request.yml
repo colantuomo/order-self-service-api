@@ -4,7 +4,7 @@ on: [pull_request]
 
 jobs:
   api:
-    name: Install,Test & Build
+    name: Install, Test & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
